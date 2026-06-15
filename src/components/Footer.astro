@@ -1,0 +1,141 @@
+---
+import { site } from '../data/site';
+import { services } from '../data/services';
+import { cities, PRIMARY_CITY_SLUGS } from '../data/cities';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+
+const footerCities = PRIMARY_CITY_SLUGS
+  .map((slug) => cities.find((c) => c.slug === slug))
+  .filter(Boolean);
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a href="/" class="footer__logo" aria-label="Accueil — Courtin Bat"><Logo size={48} /></a>
+      <p class="footer__pitch">
+        Un artisan local de confiance pour vos travaux de plomberie et de chauffage dans le
+        Vexin, le Val-d’Oise et Cergy-Pontoise. Un travail propre, fiable et durable, réalisé
+        dans les règles de l’art.
+      </p>
+      <div class="footer__contact">
+        <a href={site.phoneHref} data-track="call_footer"><Icon name="phone" /> {site.phone}</a>
+        <a href={`mailto:${site.email}`}><Icon name="mail" /> {site.email}</a>
+      </div>
+    </div>
+
+    <div class="footer__col">
+      <h3>Prestations</h3>
+      <ul>
+        {services.map((s) => (
+          <li><a href={`/${s.slug}`}>{s.name}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h3>Villes desservies</h3>
+      <ul>
+        {footerCities.map((c) => (
+          <li><a href={`/villes/${c!.slug}`}>Plombier {c!.name}</a></li>
+        ))}
+        <li><a href="/zone-intervention" class="footer__all">Toutes les villes →</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h3>Informations</h3>
+      <ul>
+        <li><a href="/a-propos">À propos</a></li>
+        <li><a href="/qualifications">Diplômes & qualifications</a></li>
+        <li><a href="/realisations">Réalisations</a></li>
+        <li><a href="/avis-clients">Avis clients</a></li>
+        <li><a href="/contact">Contact & devis</a></li>
+      </ul>
+      <h3 class="footer__hours-title"><Icon name="clock" /> Horaires</h3>
+      <ul class="footer__hours">
+        {site.hours.map((h) => (
+          <li><span>{h.days}</span><strong>{h.time}</strong></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>© {year} {site.name} — Plombier chauffagiste · Vexin · Val-d’Oise · Cergy-Pontoise</p>
+    <p class="footer__legal">
+      <a href="/mentions-legales">Mentions légales</a>
+      <span aria-hidden="true">·</span>
+      <a href="/politique-de-confidentialite">Politique de confidentialité</a>
+      <span aria-hidden="true">·</span>
+      <span>SIRET&nbsp;: {site.siret}</span>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--steel-deep);
+    color: rgba(255,255,255,0.78);
+    padding-top: clamp(3rem, 6vw, 4.5rem);
+    margin-top: 2rem;
+  }
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    padding-bottom: 2.5rem;
+  }
+  .footer__logo { color: #fff; display: inline-flex; }
+  .footer__pitch { margin: 1rem 0; max-width: 38ch; font-size: 0.96rem; }
+  .footer__contact { display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer__contact a {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-weight: 600; color: #fff;
+  }
+  .footer__contact svg { width: 17px; height: 17px; color: var(--copper); }
+
+  .footer__col h3 {
+    color: #fff;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .footer__col ul { list-style: none; padding: 0; display: grid; gap: 0.55rem; }
+  .footer__col a { font-size: 0.95rem; transition: color 0.2s; }
+  .footer__col a:hover { color: #fff; }
+  .footer__all { color: #9fc0db !important; font-weight: 600; }
+
+  .footer__hours-title {
+    display: flex; align-items: center; gap: 0.4rem;
+    margin-top: 1.5rem;
+  }
+  .footer__hours-title svg { width: 16px; height: 16px; }
+  .footer__hours li {
+    display: flex; flex-direction: column;
+    font-size: 0.9rem;
+  }
+  .footer__hours strong { color: #fff; }
+
+  .footer__bottom {
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-block: 1.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+  }
+  .footer__legal { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+  .footer__legal a:hover { color: #fff; }
+
+  @media (max-width: 900px) {
+    .footer__grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .footer__grid { grid-template-columns: 1fr; }
+    .footer__bottom { flex-direction: column; }
+  }
+</style>

@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from './Breadcrumb.astro';
+import FAQ from './FAQ.astro';
+import CTASection from './CTASection.astro';
+import QuoteForm from './QuoteForm.astro';
+import ServiceCard from './ServiceCard.astro';
+import Icon from './Icon.astro';
+import { getService, services } from '../data/services';
+import { PRIMARY_CITY_SLUGS, cities } from '../data/cities';
+import { SITE_URL } from '../data/site';
+
+interface Props { slug: string; }
+const { slug } = Astro.props;
+const service = getService(slug)!;
+
+const related = service.related.map((s) => getService(s)).filter(Boolean);
+const cityLinks = PRIMARY_CITY_SLUGS.map((s) => cities.find((c) => c.slug === s)).filter(Boolean);
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.name,
+  description: service.description,
+  serviceType: service.name,
+  url: `${SITE_URL}/${service.slug}`,
+  provider: { '@type': 'Plumber', name: 'COURTIN BAT', '@id': `${SITE_URL}/#business` },
+  areaServed: ['Vexin', 'Val-d’Oise', 'Cergy-Pontoise'],
+};
+---
+<Layout title={service.title} description={service.description} path={`/${service.slug}`}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+
+  <section class="section service-hero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Services', path: '/services' }, { name: service.name, path: `/${service.slug}` }]} />
+      <div class="service-hero__inner">
+        <div data-reveal>
+          <span class="card__icon service-hero__icon"><Icon name={service.icon} /></span>
+          <h1>{service.h1}</h1>
+          <p class="lead">{service.intro}</p>
+          <div class="service-hero__actions">
+            <a href="/contact" class="btn btn--copper btn--lg" data-track="quote_service">Demander un devis</a>
+            <a href="#faq" class="btn btn--light">Questions fréquentes</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container service-body">
+      <div data-reveal>
+        <span class="eyebrow">Vos bénéfices</span>
+        <h2>Pourquoi faire appel à Courtin Bat</h2>
+        <ul class="check-list">
+          {service.benefits.map((b) => <li>{b}</li>)}
+        </ul>
+      </div>
+      <div class="card service-details" data-reveal data-reveal-delay="120">
+        <h3>Prestations associées</h3>
+        <ul class="check-list">
+          {service.details.map((d) => <li>{d}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="section section--tight">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Services liés</span>
+          <h2>Des prestations complémentaires</h2>
+        </div>
+        <div class="grid grid--3">
+          {related.map((s, i) => <ServiceCard service={s!} delay={i * 80} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--tight cities-strip">
+    <div class="container" data-reveal>
+      <h2>{service.name} près de chez vous</h2>
+      <p class="lead">Courtin Bat intervient dans tout le Vexin et le Val-d’Oise. Quelques villes desservies&nbsp;:</p>
+      <div class="cities-strip__links">
+        {cityLinks.map((c) => (
+          <a href={`/villes/${c!.slug}`} class="badge"><Icon name="pin" /> {c!.name}</a>
+        ))}
+        <a href="/zone-intervention" class="badge badge--more">Toutes les villes →</a>
+      </div>
+    </div>
+  </section>
+
+  <FAQ items={service.faq} title={`Questions fréquentes — ${service.name}`} />
+
+  <CTASection />
+  <QuoteForm />
+</Layout>
+
+<style>
+  .service-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .service-hero__inner { max-width: 60ch; margin-top: 1.5rem; }
+  .service-hero__icon {
+    background: rgba(255,255,255,0.14);
+    color: #fff;
+    margin-bottom: 1.2rem;
+  }
+  .service-hero__actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.6rem; }
+
+  .service-body {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: start;
+  }
+  .service-details h3 { margin-bottom: 1rem; }
+
+  .cities-strip__links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.2rem; }
+  .cities-strip .badge:hover { border-color: var(--steel-2); }
+  .badge--more { background: var(--steel); color: #fff; border-color: var(--steel); }
+
+  @media (max-width: 820px) { .service-body { grid-template-columns: 1fr; } }
+</style>

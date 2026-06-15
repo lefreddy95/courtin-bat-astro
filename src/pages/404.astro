@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+---
+<Layout title="Page introuvable | Courtin Bat" description="La page demandée n’existe pas." noindex transparentHeader>
+  <section class="section surface-dark e404">
+    <div class="container e404__inner">
+      <span class="eyebrow" style="justify-content:center">Erreur 404</span>
+      <h1>Cette page n’existe pas</h1>
+      <p class="lead mx-auto" style="text-align:center">
+        La page que vous cherchez a peut-être été déplacée. Revenez à l’accueil ou contactez
+        directement Courtin Bat.
+      </p>
+      <div class="e404__actions">
+        <a href="/" class="btn btn--copper btn--lg">Retour à l’accueil</a>
+        <a href={site.phoneHref} class="btn btn--light btn--lg"><Icon name="phone" /> {site.phone}</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .e404 { min-height: 70vh; display: grid; place-content: center; text-align: center; }
+  .e404__inner { max-width: 56ch; }
+  .e404__actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 1.8rem; }
+</style>

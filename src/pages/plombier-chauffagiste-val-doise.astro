@@ -1,0 +1,25 @@
+---
+import RegionTemplate from '../components/RegionTemplate.astro';
+
+const faq = [
+  { q: 'Êtes-vous chauffagiste en plus d’être plombier ?', a: 'Oui. Courtin Bat est plombier ET chauffagiste, formé au chauffage et au génie climatique dans un centre d’État spécialisé.' },
+  { q: 'Assurez-vous l’entretien du chauffage ?', a: 'Oui, l’entretien régulier de votre installation garantit sécurité, performance et longévité.' },
+  { q: 'Remplacez-vous les chaudières et chauffe-eau ?', a: 'Bien sûr : conseil, remplacement et mise en conformité de vos équipements de chauffage et d’eau chaude.' },
+  { q: 'Intervenez-vous dans tout le Val-d’Oise ?', a: 'Courtin Bat couvre le Vexin, Cergy-Pontoise et une large partie du Val-d’Oise.' },
+];
+---
+<RegionTemplate
+  title="Plombier chauffagiste Val-d’Oise | Courtin Bat"
+  description="Plombier chauffagiste diplômé dans le Val-d’Oise : Courtin Bat installe, entretient et dépanne votre chauffage et votre plomberie. Génie climatique, chauffe-eau et rénovation."
+  path="/plombier-chauffagiste-val-doise"
+  eyebrow="Plomberie & chauffage · Val-d’Oise"
+  h1="Plombier chauffagiste dans le Val-d’Oise"
+  intro="Plombier et chauffagiste, Courtin Bat vous apporte une expertise complète en plomberie, chauffage et génie climatique dans tout le Val-d’Oise."
+  paragraphs={[
+    'En tant que <strong>plombier chauffagiste</strong>, Courtin Bat maîtrise aussi bien la plomberie que le <a href="/chauffage">chauffage</a> et le <a href="/climatisation-genie-climatique">génie climatique</a>. Un double savoir-faire précieux pour votre confort.',
+    'Installation et entretien de chauffage, remplacement de <a href="/chauffe-eau">chauffe-eau</a>, <a href="/depannage-plomberie">dépannage</a> et <a href="/recherche-de-fuite">recherche de fuite</a> : l’artisan intervient sur l’ensemble de vos équipements.',
+    'Des installations conformes, sécurisées et durables, réalisées dans les règles de l’art par un artisan diplômé.',
+  ]}
+  citySlugs={['cergy', 'pontoise', 'magny-en-vexin', 'marines', 'osny', 'auvers-sur-oise', 'taverny', 'franconville']}
+  faq={faq}
+/>

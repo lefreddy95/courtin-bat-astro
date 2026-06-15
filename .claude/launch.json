@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "courtin-bat-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 4321
+    },
+    {
+      "name": "courtin-bat-build",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "serve", "dist", "-l", "4330"],
+      "port": 4330
+    }
+  ]
+}

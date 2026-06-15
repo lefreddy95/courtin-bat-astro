@@ -1,0 +1,38 @@
+---
+import { services } from '../data/services';
+import ServiceCard from './ServiceCard.astro';
+import Icon from './Icon.astro';
+---
+<section class="section services" id="services">
+  <div class="container">
+    <div class="services__head" data-reveal>
+      <div class="section-head" style="margin-bottom:0">
+        <span class="eyebrow">Nos prestations</span>
+        <h2>Une expertise complète en plomberie et chauffage</h2>
+        <p class="lead">
+          Du dépannage à la rénovation, Courtin Bat intervient sur l’ensemble de vos besoins
+          sanitaires et thermiques.
+        </p>
+      </div>
+      <a href="/services" class="btn btn--ghost services__all">Tous les services <Icon name="arrow" /></a>
+    </div>
+
+    <div class="grid grid--3">
+      {services.map((s, i) => <ServiceCard service={s} delay={(i % 3) * 80} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .services__all { flex: 0 0 auto; }
+  @media (max-width: 720px) {
+    .services__head { flex-direction: column; align-items: flex-start; }
+  }
+</style>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 600" role="img" aria-label="COURTIN BAT">
+  <!-- Anneau C ouvert sur la droite -->
+  <path d="M424 440 A205 205 0 1 1 424 204" fill="none" stroke="#111317" stroke-width="70" stroke-linecap="round"/>
+  <!-- Robinet -->
+  <g fill="#111317">
+    <rect x="345" y="92" width="34" height="30" rx="12"/>
+    <rect x="290" y="118" width="144" height="36" rx="18"/>
+    <rect x="350" y="150" width="24" height="24"/>
+    <rect x="310" y="170" width="104" height="32" rx="8"/>
+    <rect x="338" y="200" width="48" height="60"/>
+    <rect x="298" y="246" width="128" height="78" rx="12"/>
+    <rect x="188" y="256" width="130" height="58" rx="6"/>
+    <rect x="172" y="246" width="36" height="78" rx="14"/>
+    <path d="M388 300 L470 300 Q500 300 500 342 L500 378 L452 378 L452 348 Q452 324 424 324 L388 324 Z"/>
+    <rect x="446" y="372" width="66" height="28" rx="13"/>
+  </g>
+  <!-- Vague d'eau -->
+  <path d="M150 432 C196 414 236 452 286 440 C332 429 374 458 420 442 C442 434 462 432 472 446 L472 470 C470 506 452 548 430 562 C419 542 414 520 404 506 C360 520 300 514 250 502 C210 493 175 472 150 470 Z" fill="#1583C7"/>
+  <!-- Goutte -->
+  <path d="M479 404 C497 430 508 444 508 460 a29 29 0 1 1 -58 0 C450 444 461 430 479 404 Z" fill="#1583C7"/>
+  <path d="M479 430 C490 446 497 455 497 464 a18 18 0 1 1 -36 0 C461 455 468 446 479 430 Z" fill="#11456b"/>
+</svg>

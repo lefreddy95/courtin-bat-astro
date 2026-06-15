@@ -1,0 +1,25 @@
+---
+import RegionTemplate from '../components/RegionTemplate.astro';
+
+const faq = [
+  { q: 'Intervenez-vous dans tout le Vexin ?', a: 'Oui, Courtin Bat couvre l’ensemble du Vexin, de Magny-en-Vexin à Marines, en passant par Vigny, Us, Avernes et les villages alentours.' },
+  { q: 'Faites-vous du dépannage plomberie dans le Vexin ?', a: 'Bien sûr : fuites, canalisations bouchées, robinetterie ou WC en panne, Courtin Bat assure le dépannage plomberie dans tout le Vexin.' },
+  { q: 'Êtes-vous un plombier chauffagiste diplômé ?', a: 'Oui, Courtin Bat est dirigé par un plombier chauffagiste diplômé, formé en plomberie, chauffage et génie climatique.' },
+  { q: 'Peut-on obtenir un devis gratuit ?', a: 'Oui, un devis clair et gratuit vous est proposé avant toute intervention.' },
+];
+---
+<RegionTemplate
+  title="Plombier dans le Vexin | Courtin Bat, plombier chauffagiste"
+  description="Courtin Bat, plombier chauffagiste diplômé dans le Vexin : dépannage, recherche de fuite, chauffage, chauffe-eau et rénovation. Travail propre et conforme aux règles de l’art."
+  path="/plombier-vexin"
+  eyebrow="Vexin français & parisien"
+  h1="Plombier chauffagiste dans le Vexin"
+  intro="Vous cherchez un plombier dans le Vexin ? Courtin Bat accompagne les particuliers pour leurs dépannages, installations et rénovations, avec un travail soigné et durable."
+  paragraphs={[
+    'Le <strong>Vexin</strong> est un territoire que Courtin Bat connaît bien. De Magny-en-Vexin à Marines, en passant par Vigny, Avernes ou Us, l’artisan intervient pour l’ensemble de vos besoins en plomberie et chauffage.',
+    'Qu’il s’agisse d’un <a href="/depannage-plomberie">dépannage de plomberie</a>, d’une <a href="/recherche-de-fuite">recherche de fuite</a>, du remplacement d’un <a href="/chauffe-eau">chauffe-eau</a> ou de l’entretien de votre <a href="/chauffage">chauffage</a>, vous bénéficiez d’un savoir-faire professionnel et d’un conseil clair.',
+    'Courtin Bat met un point d’honneur à réaliser un travail propre, fiable et conforme aux règles de l’art, du diagnostic à la finition.',
+  ]}
+  citySlugs={['magny-en-vexin', 'marines', 'vigny', 'ableiges', 'us', 'avernes', 'chars', 'theuville']}
+  faq={faq}
+/>

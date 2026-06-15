@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroPremium from '../components/HeroPremium.astro';
+import ProfessionalSection from '../components/ProfessionalSection.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+import ArtisanSection from '../components/ArtisanSection.astro';
+import ScrollWaterPath from '../components/ScrollWaterPath.astro';
+import QualificationCard from '../components/QualificationCard.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import ZoneSection from '../components/ZoneSection.astro';
+import LocalSeoSection from '../components/LocalSeoSection.astro';
+import CTASection from '../components/CTASection.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import FAQ from '../components/FAQ.astro';
+import SchemaLocalBusiness from '../components/SchemaLocalBusiness.astro';
+import Icon from '../components/Icon.astro';
+import { homeFaq } from '../data/faq';
+import { site } from '../data/site';
+---
+<Layout
+  title={`${site.name} — Plombier chauffagiste Vexin & Val-d’Oise`}
+  description={site.description}
+  path="/"
+  transparentHeader={true}
+>
+  <SchemaLocalBusiness slot="head" />
+
+  <HeroPremium />
+
+  <ProfessionalSection />
+
+  <!-- Zone parcourue par le filet d'eau au scroll -->
+  <div class="water-scope" data-water-scope>
+    <ScrollWaterPath />
+
+    <ServicesSection />
+
+    <ArtisanSection />
+
+    <!-- Mise en avant diplômes & qualifications -->
+    <section class="section qualif-teaser" data-drop-reveal>
+      <div class="container">
+        <div class="section-head text-center mx-auto" data-reveal>
+          <span class="eyebrow" style="justify-content:center">Diplômes & qualifications</span>
+          <h2>Des qualifications qui sécurisent vos installations</h2>
+          <p class="lead mx-auto" style="text-align:center">
+            Courtin Bat est dirigé par un plombier chauffagiste diplômé, formé en plomberie,
+            chauffage et génie climatique dans un centre d’État spécialisé.
+          </p>
+        </div>
+        <div class="grid grid--3">
+          <QualificationCard icon="graduation" title="Formation professionnelle reconnue" body="Un diplôme et un parcours de formation solides pour exercer le métier avec rigueur." delay={0} />
+          <QualificationCard icon="flame" title="Expertise chauffage & génie climatique" body="Un apprentissage approfondi du chauffage et du génie climatique pour un confort optimisé." delay={80} />
+          <QualificationCard icon="shield" title="Sécurité & conformité" body="Des installations conformes, durables et réalisées dans les règles de l’art." delay={160} />
+        </div>
+        <div class="text-center" style="margin-top:2rem" data-reveal>
+          <a href="/qualifications" class="btn btn--primary">Découvrir nos qualifications <Icon name="arrow" /></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Réalisations / avant-après (placeholder) -->
+    <section class="section realisations" data-drop-reveal>
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Réalisations</span>
+          <h2>Un travail propre, fiable et durable</h2>
+          <p class="lead">Quelques exemples d’interventions réalisées avec soin dans le Vexin et le Val-d’Oise.</p>
+        </div>
+        <div class="grid grid--3">
+          {['Rénovation salle de bain', 'Remplacement chauffe-eau', 'Installation chauffage'].map((t, i) => (
+            <div class="realisation card" data-reveal data-reveal-delay={i * 80}>
+              <div class="realisation__img" role="img" aria-label={`Réalisation : ${t}`}>
+                <Icon name="sparkle" />
+                <span>Photo à ajouter</span>
+              </div>
+              <h3>{t}</h3>
+            </div>
+          ))}
+        </div>
+        <p class="realisations__note" data-reveal>
+          <a href="/realisations" class="link-arrow">Voir toutes nos réalisations <Icon name="arrow" /></a>
+        </p>
+      </div>
+    </section>
+
+    <ReviewsSection limit={3} schema={true} />
+  </div>
+
+  <ZoneSection limit={24} />
+
+  <FAQ items={homeFaq} title="Vos questions sur nos interventions" eyebrow="FAQ locale" />
+
+  <CTASection />
+
+  <QuoteForm />
+
+  <LocalSeoSection />
+</Layout>
+
+<style>
+  .water-scope { position: relative; }
+  .realisation { padding: 0; overflow: hidden; }
+  .realisation__img {
+    aspect-ratio: 4 / 3;
+    background: var(--grad-steel);
+    color: rgba(255,255,255,0.7);
+    display: grid; place-content: center; justify-items: center; gap: 0.5rem;
+  }
+  .realisation__img :global(svg) { width: 36px; height: 36px; }
+  .realisation__img span { font-size: 0.85rem; }
+  .realisation h3 { padding: 1rem 1.3rem 1.3rem; font-size: 1.15rem; }
+  .realisations__note { margin-top: 2rem; }
+</style>

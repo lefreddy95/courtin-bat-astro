@@ -1,0 +1,12 @@
+---
+import CityTemplate from '../../components/CityTemplate.astro';
+import { cities, NAMED_CITY_PAGES } from '../../data/cities';
+
+export function getStaticPaths() {
+  return cities.map((c) => ({ params: { slug: c.slug } }));
+}
+
+const { slug } = Astro.params;
+const canonical = NAMED_CITY_PAGES[slug!];
+---
+<CityTemplate slug={slug!} path={`/villes/${slug}`} canonical={canonical} />

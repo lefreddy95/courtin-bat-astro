@@ -1,0 +1,52 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[dev]
+  command = "npm run dev"
+  targetPort = 4321
+
+# ---------------------------------------------------------------------------
+# En-têtes de sécurité globaux
+# ---------------------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    X-XSS-Protection = "1; mode=block"
+
+# ---------------------------------------------------------------------------
+# Cache long pour les assets statiques (images, polices, svg)
+# ---------------------------------------------------------------------------
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Astro émet le CSS/JS hashé dans /_astro/ — cache long et immutable
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# CSS / JS racine — cache 1 mois
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# Pas de redirect SPA : Astro génère des pages statiques (build format directory).
+# Netlify Forms est détecté automatiquement à partir des attributs data-netlify.

@@ -1,0 +1,25 @@
+---
+import RegionTemplate from '../components/RegionTemplate.astro';
+
+const faq = [
+  { q: 'Couvrez-vous tout le Val-d’Oise ?', a: 'Courtin Bat intervient sur une large partie du Val-d’Oise (95), notamment le Vexin, Cergy-Pontoise et les communes environnantes.' },
+  { q: 'Proposez-vous le dépannage et l’installation ?', a: 'Oui, du simple dépannage à l’installation complète : plomberie, chauffage, chauffe-eau et rénovation sanitaire.' },
+  { q: 'Intervenez-vous pour les chauffe-eau ?', a: 'Oui, installation, remplacement et dépannage de chauffe-eau font partie de nos prestations dans le Val-d’Oise.' },
+  { q: 'Le devis est-il gratuit ?', a: 'Oui, un devis clair et transparent vous est remis avant le début des travaux.' },
+];
+---
+<RegionTemplate
+  title="Plombier Val-d’Oise (95) | Courtin Bat, plombier chauffagiste"
+  description="Plombier chauffagiste dans le Val-d’Oise : Courtin Bat assure dépannage, recherche de fuite, chauffage, chauffe-eau et rénovation sanitaire. Un travail propre, fiable et durable."
+  path="/plombier-val-doise"
+  eyebrow="Val-d’Oise (95)"
+  h1="Plombier chauffagiste dans le Val-d’Oise"
+  intro="Courtin Bat, plombier chauffagiste diplômé, intervient dans le Val-d’Oise pour vos dépannages, installations et rénovations, avec sérieux et soin."
+  paragraphs={[
+    'Du <strong>Vexin</strong> à <strong>Cergy-Pontoise</strong>, Courtin Bat couvre une large partie du <strong>Val-d’Oise</strong> pour répondre à vos besoins en plomberie et chauffage.',
+    'L’artisan vous accompagne sur l’ensemble des prestations : <a href="/depannage-plomberie">dépannage</a>, <a href="/recherche-de-fuite">recherche de fuite</a>, <a href="/chauffage">chauffage</a>, <a href="/chauffe-eau">chauffe-eau</a> et <a href="/renovation-salle-de-bain">rénovation de salle de bain</a>.',
+    'Une expertise complète, une approche transparente et un travail réalisé dans les règles de l’art, au service de votre confort.',
+  ]}
+  citySlugs={['cergy', 'pontoise', 'osny', 'auvers-sur-oise', 'magny-en-vexin', 'taverny', 'l-isle-adam', 'beaumont-sur-oise']}
+  faq={faq}
+/>

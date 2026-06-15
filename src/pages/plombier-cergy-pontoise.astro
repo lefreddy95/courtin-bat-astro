@@ -1,0 +1,25 @@
+---
+import RegionTemplate from '../components/RegionTemplate.astro';
+
+const faq = [
+  { q: 'Intervenez-vous sur toute l’agglomération de Cergy-Pontoise ?', a: 'Oui, Courtin Bat couvre Cergy, Pontoise, Osny, Vauréal, Jouy-le-Moutier, Éragny et les communes de l’agglomération.' },
+  { q: 'Faites-vous du dépannage rapide à Cergy-Pontoise ?', a: 'Selon les disponibilités, Courtin Bat s’organise pour intervenir dans les meilleurs délais en cas de fuite ou de panne.' },
+  { q: 'Réalisez-vous des rénovations de salle de bain ?', a: 'Oui, de la dépose à la pose des sanitaires et de la robinetterie, avec un travail soigné.' },
+  { q: 'Le devis est-il gratuit ?', a: 'Oui, un devis clair et gratuit vous est proposé avant toute intervention.' },
+];
+---
+<RegionTemplate
+  title="Plombier Cergy-Pontoise | Courtin Bat, plombier chauffagiste"
+  description="Plombier chauffagiste à Cergy-Pontoise : Courtin Bat assure dépannage, chauffage, chauffe-eau, recherche de fuite et rénovation sanitaire à Cergy, Pontoise, Osny et alentours."
+  path="/plombier-cergy-pontoise"
+  eyebrow="Agglomération de Cergy-Pontoise"
+  h1="Plombier chauffagiste à Cergy-Pontoise"
+  intro="Courtin Bat intervient dans toute l’agglomération de Cergy-Pontoise pour vos travaux de plomberie et de chauffage, avec sérieux et propreté."
+  paragraphs={[
+    'L’agglomération de <strong>Cergy-Pontoise</strong> — Cergy, Pontoise, Osny, Vauréal, Jouy-le-Moutier, Éragny — fait partie du secteur d’intervention privilégié de Courtin Bat.',
+    'Du <a href="/depannage-plomberie">dépannage</a> à la <a href="/renovation-salle-de-bain">rénovation de salle de bain</a>, en passant par le <a href="/chauffage">chauffage</a> et les <a href="/chauffe-eau">chauffe-eau</a>, l’artisan met son expertise à votre service.',
+    'Un travail propre, fiable et durable, réalisé par un plombier chauffagiste diplômé.',
+  ]}
+  citySlugs={['cergy', 'pontoise', 'osny', 'vaureal', 'jouy-le-moutier', 'eragny', 'courdimanche', 'neuville-sur-oise']}
+  faq={faq}
+/>

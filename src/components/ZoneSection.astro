@@ -1,0 +1,67 @@
+---
+import { cities } from '../data/cities';
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Nombre de villes affichées dans la grille */
+  limit?: number;
+  compact?: boolean;
+}
+const { limit = 24, compact = false } = Astro.props;
+const shown = cities.slice(0, limit);
+---
+<section class="section zone surface-dark" id="zone" data-drop-reveal>
+  <div class="container">
+    <div class="zone__head" data-reveal>
+      <span class="eyebrow"><Icon name="pin" /> Zone d’intervention</span>
+      <h2>Plombier chauffagiste dans le Vexin, le Val-d’Oise et Cergy-Pontoise</h2>
+      <p class="lead">
+        Courtin Bat intervient sur l’ensemble du Vexin et du Val-d’Oise, ainsi que dans la
+        région de Cergy-Pontoise et les communes alentours.
+      </p>
+    </div>
+
+    <ul class="zone__cities" data-reveal>
+      {shown.map((c) => (
+        <li>
+          <a href={`/villes/${c.slug}`}><Icon name="pin" /> {c.name}</a>
+        </li>
+      ))}
+    </ul>
+
+    {!compact && (
+      <div class="zone__cta" data-reveal>
+        <a href="/zone-intervention" class="btn btn--light">Voir toutes les villes desservies <Icon name="arrow" /></a>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .zone__head { max-width: 64ch; margin-bottom: 2rem; }
+  .zone__cities {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.6rem;
+  }
+  .zone__cities a {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.9);
+    transition: background-color 0.25s, transform 0.25s;
+  }
+  .zone__cities a:hover { background: rgba(255,255,255,0.16); transform: translateY(-2px); }
+  .zone__cities svg { width: 15px; height: 15px; color: #9fc0db; flex: 0 0 auto; }
+  .zone__cta { margin-top: 1.8rem; }
+
+  @media (max-width: 900px) { .zone__cities { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px) { .zone__cities { grid-template-columns: repeat(2, 1fr); } }
+</style>

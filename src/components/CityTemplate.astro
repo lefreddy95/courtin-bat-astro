@@ -1,0 +1,156 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import FAQ from '../components/FAQ.astro';
+import CTASection from '../components/CTASection.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Icon from '../components/Icon.astro';
+import { getCity, cities } from '../data/cities';
+import { getService } from '../data/services';
+import { cityFaq } from '../data/faq';
+import { site, SITE_URL } from '../data/site';
+
+interface Props {
+  slug: string;
+  /** Chemin de la page courante (ex: /plombier-cergy ou /villes/cergy) */
+  path: string;
+  /** Canonical override (pour éviter le contenu dupliqué entre routes) */
+  canonical?: string;
+}
+const { slug, path, canonical } = Astro.props;
+const city = getCity(slug)!;
+const canonicalPath = canonical || path;
+
+const featured = city.featuredServices.map((s) => getService(s)).filter(Boolean);
+const nearbyCities = city.nearby.map((s) => getCity(s)).filter(Boolean);
+const faqItems = cityFaq(city.name);
+
+const localSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['Plumber', 'HVACBusiness'],
+  name: `${site.name} — Plombier chauffagiste ${city.name}`,
+  description: city.description,
+  url: `${SITE_URL}${canonicalPath}`,
+  telephone: site.phoneHref.replace('tel:', ''),
+  areaServed: { '@type': 'City', name: city.name },
+  provider: { '@id': `${SITE_URL}/#business` },
+};
+---
+<Layout title={city.title} description={city.description} path={canonicalPath} transparentHeader>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(localSchema)} />
+
+  <!-- 1. Hero local -->
+  <section class="section city-hero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Zone d’intervention', path: '/zone-intervention' }, { name: city.name, path }]} />
+      <div class="city-hero__inner" data-reveal>
+        <span class="eyebrow"><Icon name="pin" /> {city.secteur}</span>
+        <h1>Plombier chauffagiste à {city.name}</h1>
+        <p class="lead">{city.intro}</p>
+        <div class="city-hero__actions">
+          <a href="/contact" class="btn btn--copper btn--lg" data-track="quote_city">Demander un devis</a>
+          <a href={site.phoneHref} class="btn btn--light btn--lg" data-track="call_city">
+            <Icon name="phone" /> {site.phone}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Services disponibles -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Nos prestations</span>
+        <h2>Services de plomberie et chauffage à {city.name}</h2>
+        <p class="lead">Courtin Bat assure à {city.name} l’ensemble de vos travaux de plomberie et de chauffage.</p>
+      </div>
+      <div class="grid grid--4">
+        {featured.map((s, i) => (
+          <a href={`/${s!.slug}`} class="card service-mini" data-reveal data-reveal-delay={i * 80}>
+            <span class="card__icon"><Icon name={s!.icon} /></span>
+            <h3>{s!.name}</h3>
+            <p>{s!.excerpt}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Pourquoi choisir Courtin Bat -->
+  <section class="section section--tight why-city">
+    <div class="container why-city__inner">
+      <div data-reveal>
+        <span class="eyebrow">Pourquoi nous choisir</span>
+        <h2>Un artisan sérieux à {city.name}</h2>
+        <p>
+          À {city.name} comme dans tout le Vexin et le Val-d’Oise, Courtin Bat intervient avec
+          le même soin&nbsp;: un diagnostic clair, un devis transparent et un travail propre,
+          fiable et durable.
+        </p>
+      </div>
+      <ul class="check-list" data-reveal data-reveal-delay="120">
+        <li>Plombier chauffagiste diplômé et qualifié</li>
+        <li>Intervention locale à {city.name} et alentours</li>
+        <li>Devis clair, sans mauvaise surprise</li>
+        <li>Chantier soigné et laissé propre</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. Intervention autour de la ville -->
+  {nearbyCities.length > 0 && (
+    <section class="section section--tight">
+      <div class="container" data-reveal>
+        <h2>Intervention autour de {city.name}</h2>
+        <p class="lead">Courtin Bat se déplace également dans les communes voisines&nbsp;:</p>
+        <div class="nearby">
+          {nearbyCities.map((c) => (
+            <a href={`/villes/${c!.slug}`} class="badge"><Icon name="pin" /> {c!.name}</a>
+          ))}
+          <a href="/zone-intervention" class="badge badge--more">Toute la zone →</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 5. Qualifications -->
+  <section class="section surface-dark qualif-city" data-drop-reveal>
+    <div class="container qualif-city__inner">
+      <div data-reveal>
+        <span class="eyebrow"><Icon name="award" /> Qualifications</span>
+        <h2>Un plombier chauffagiste diplômé à {city.name}</h2>
+        <p class="lead">
+          Formé en plomberie, chauffage et génie climatique dans un centre d’État spécialisé,
+          Courtin Bat vous garantit des installations conformes et durables.
+        </p>
+        <a href="/qualifications" class="btn btn--light">Voir nos qualifications <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FAQ locale -->
+  <FAQ items={faqItems} title={`Vos questions — Plombier ${city.name}`} eyebrow="FAQ locale" />
+
+  <!-- 7. CTA -->
+  <CTASection
+    title={`Besoin d’un plombier chauffagiste à ${city.name} ?`}
+    text="Appelez Courtin Bat ou demandez un devis gratuit : réponse rapide et conseil clair."
+  />
+  <QuoteForm defaultCity={city.name} />
+</Layout>
+
+<style>
+  .city-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .city-hero__inner { max-width: 62ch; margin-top: 1.5rem; }
+  .city-hero__actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.6rem; }
+  .service-mini { display: flex; flex-direction: column; }
+  .why-city__inner { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  .why-city p { color: var(--ink-2); }
+  .nearby { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.2rem; }
+  .nearby .badge:hover { border-color: var(--steel-2); }
+  .badge--more { background: var(--steel); color: #fff; border-color: var(--steel); }
+  .qualif-city__inner { max-width: 60ch; }
+  .qualif-city .btn { margin-top: 1.4rem; }
+  @media (max-width: 860px) { .why-city__inner { grid-template-columns: 1fr; } }
+</style>

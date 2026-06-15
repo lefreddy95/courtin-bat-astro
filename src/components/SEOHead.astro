@@ -1,0 +1,49 @@
+---
+import { site, SITE_URL } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Chemin de la page (ex: /services) pour le canonical */
+  path?: string;
+  image?: string;
+  /** Empêcher l'indexation (pages utilitaires) */
+  noindex?: boolean;
+  type?: 'website' | 'article';
+}
+
+const {
+  title,
+  description,
+  path = Astro.url.pathname,
+  image = '/assets/og-courtin-bat.jpg',
+  noindex = false,
+  type = 'website',
+} = Astro.props;
+
+const canonical = new URL(path.endsWith('/') && path !== '/' ? path.slice(0, -1) : path, SITE_URL).href;
+const ogImage = new URL(image, SITE_URL).href;
+const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+---
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:locale" content="fr_FR" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<meta name="geo.region" content="FR-95" />
+<meta name="geo.placename" content="Vexin, Val-d’Oise" />

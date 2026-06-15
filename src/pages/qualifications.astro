@@ -1,0 +1,226 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import QualificationCard from '../components/QualificationCard.astro';
+import CTASection from '../components/CTASection.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Icon from '../components/Icon.astro';
+import { timeline, diplomas, reassurance } from '../data/qualifications';
+
+const title = 'Diplômes & Qualifications | Courtin Bat, plombier chauffagiste diplômé';
+const description =
+  'Courtin Bat est dirigé par un plombier chauffagiste diplômé, formé en plomberie, chauffage, climatisation et génie climatique dans un centre d’État spécialisé. Des qualifications qui sécurisent vos installations.';
+---
+<Layout title={title} description={description} path="/qualifications" transparentHeader>
+  <!-- 1. Hero qualifications -->
+  <section class="section qhero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Qualifications', path: '/qualifications' }]} />
+      <div class="qhero__inner" data-reveal>
+        <span class="eyebrow"><Icon name="award" /> Un vrai artisan diplômé</span>
+        <h1>Diplômes &amp; Qualifications</h1>
+        <p class="lead">
+          Courtin Bat est dirigé par un plombier chauffagiste diplômé, formé dans un centre
+          d’État spécialisé en plomberie, chauffage, climatisation et génie climatique.
+        </p>
+        <div class="qhero__badges badges">
+          <span class="badge badge--light"><Icon name="check" /> Formation reconnue</span>
+          <span class="badge badge--light"><Icon name="check" /> Règles de l’art</span>
+          <span class="badge badge--light"><Icon name="check" /> Sécurité & conformité</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Un vrai artisan formé aux règles de l'art -->
+  <section class="section">
+    <div class="container intro-split">
+      <div data-reveal>
+        <span class="eyebrow">L’essentiel</span>
+        <h2>Un vrai artisan formé aux règles de l’art</h2>
+        <p>
+          Choisir un artisan diplômé, c’est avoir l’assurance d’un travail réalisé avec
+          méthode, conformité et sérieux. Courtin Bat met en avant une formation solide et un
+          savoir-faire professionnel au service de votre confort.
+        </p>
+        <p>
+          De la plomberie au chauffage, en passant par le génie climatique, chaque intervention
+          est pensée pour être propre, durable et sécurisée.
+        </p>
+      </div>
+      <div class="card intro-split__card" data-reveal data-reveal-delay="120">
+        <ul class="check-list">
+          <li>Formation professionnelle reconnue</li>
+          <li>Diplômes requis pour exercer le métier</li>
+          <li>Apprentissage approfondi en chauffage</li>
+          <li>Apprentissage approfondi en génie climatique</li>
+          <li>Respect des règles de l’art et de la conformité</li>
+          <li>Travail propre, durable et sérieux</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 & 4. Parcours de formation + cartes diplômes -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Parcours de formation</span>
+        <h2>Des compétences acquises et vérifiées</h2>
+        <p class="lead">Un parcours structuré qui couvre l’ensemble des métiers de la plomberie et du chauffage.</p>
+      </div>
+      <div class="grid grid--3">
+        {diplomas.map((d, i) => (
+          <QualificationCard icon={d.icon} title={d.title} body={d.body} delay={(i % 3) * 80} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 & 6. Expertise plomberie / chauffage & génie climatique -->
+  <section class="section expertise">
+    <div class="container">
+      <div class="grid grid--2">
+        <div class="card expertise__block" data-reveal>
+          <span class="card__icon"><Icon name="wrench" /></span>
+          <h3>Expertise plomberie</h3>
+          <p>
+            Réseaux d’alimentation et d’évacuation, sanitaires, robinetterie, recherche de
+            fuite : Courtin Bat maîtrise l’ensemble des interventions de plomberie.
+          </p>
+          <ul class="check-list">
+            <li>Installation et reprise de réseaux d’eau</li>
+            <li>Dépannage et recherche de fuite</li>
+            <li>Pose de sanitaires et robinetterie</li>
+          </ul>
+        </div>
+        <div class="card expertise__block" data-reveal data-reveal-delay="120">
+          <span class="card__icon"><Icon name="flame" /></span>
+          <h3>Expertise chauffage &amp; génie climatique</h3>
+          <p>
+            Une spécialisation poussée en chauffage et génie climatique pour des installations
+            performantes, économes et confortables, été comme hiver.
+          </p>
+          <ul class="check-list">
+            <li>Installation et entretien de chauffage</li>
+            <li>Solutions de confort thermique adaptées</li>
+            <li>Optimisation de la consommation d’énergie</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Pourquoi les qualifications sont importantes -->
+  <section class="section surface-dark why-qualif" data-drop-reveal>
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Votre intérêt</span>
+        <h2>Pourquoi les qualifications sont importantes</h2>
+        <p class="lead">
+          Confier vos travaux à un artisan formé, c’est faire le choix de la sécurité, du
+          sérieux et de la qualité — sans mauvaise surprise.
+        </p>
+      </div>
+      <div class="grid grid--3">
+        {reassurance.map((b, i) => (
+          <div class="card why-card" data-reveal data-reveal-delay={i * 80}>
+            <span class="card__icon"><Icon name={b.icon} /></span>
+            <h3>{b.title}</h3>
+            <p>{b.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Timeline de formation et expérience -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Parcours</span>
+        <h2>De la formation à l’artisan d’aujourd’hui</h2>
+      </div>
+      <ol class="timeline">
+        {timeline.map((step, i) => (
+          <li class="timeline__item" data-reveal data-reveal-delay={i * 80}>
+            <div class="timeline__dot" aria-hidden="true"></div>
+            <span class="timeline__year">{step.year}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 9 & 10. Réassurance + CTA -->
+  <CTASection
+    title="Confiez vos travaux à un artisan diplômé"
+    text="Demandez un devis clair ou appelez Courtin Bat : vous bénéficiez d’un savoir-faire professionnel et de qualifications qui sécurisent vos installations."
+  />
+  <QuoteForm />
+</Layout>
+
+<style>
+  .qhero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .qhero__inner { max-width: 60ch; margin-top: 1.5rem; }
+  .qhero__badges { margin-top: 1.4rem; }
+
+  .intro-split { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  .intro-split p { color: var(--ink-2); margin-bottom: 1rem; }
+  .intro-split__card { background: var(--surface-2); }
+
+  .expertise__block .check-list { margin-top: 1rem; }
+  .expertise__block p { color: var(--ink-2); }
+
+  .why-card { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.14); }
+  .why-card h3 { color: #fff; }
+  .why-card p { color: rgba(255,255,255,0.82); }
+  .why-card .card__icon { background: rgba(255,255,255,0.14); color: #fff; }
+
+  /* Timeline */
+  .timeline {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    position: relative;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .timeline__item {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.3rem;
+    padding-top: 2.2rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .timeline__dot {
+    position: absolute;
+    top: 1.3rem; left: 1.3rem;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--copper);
+    box-shadow: 0 0 0 5px rgba(176, 106, 60, 0.18);
+  }
+  .timeline__year {
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 700;
+    color: var(--steel);
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .timeline__item h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+  .timeline__item p { color: var(--ink-2); font-size: 0.95rem; }
+
+  @media (max-width: 900px) {
+    .intro-split { grid-template-columns: 1fr; }
+    .timeline { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) { .timeline { grid-template-columns: 1fr; } }
+</style>

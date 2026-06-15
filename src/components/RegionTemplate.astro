@@ -1,0 +1,103 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import FAQ from '../components/FAQ.astro';
+import CTASection from '../components/CTASection.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Icon from '../components/Icon.astro';
+import { services } from '../data/services';
+import { getCity } from '../data/cities';
+import type { FaqItem } from '../data/faq';
+import { site, SITE_URL } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  eyebrow: string;
+  h1: string;
+  intro: string;
+  paragraphs: string[];
+  /** Slugs de villes représentatives à mettre en avant */
+  citySlugs: string[];
+  faq: FaqItem[];
+}
+const { title, description, path, eyebrow, h1, intro, paragraphs, citySlugs, faq } = Astro.props;
+const featuredCities = citySlugs.map((s) => getCity(s)).filter(Boolean);
+
+const localSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['Plumber', 'HVACBusiness'],
+  name: title,
+  description,
+  url: `${SITE_URL}${path}`,
+  telephone: site.phoneHref.replace('tel:', ''),
+  provider: { '@id': `${SITE_URL}/#business` },
+};
+---
+<Layout title={title} description={description} path={path} transparentHeader>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(localSchema)} />
+
+  <section class="section region-hero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Zone d’intervention', path: '/zone-intervention' }, { name: h1, path }]} />
+      <div class="region-hero__inner" data-reveal>
+        <span class="eyebrow"><Icon name="pin" /> {eyebrow}</span>
+        <h1>{h1}</h1>
+        <p class="lead">{intro}</p>
+        <div class="region-hero__actions">
+          <a href="/contact" class="btn btn--copper btn--lg" data-track="quote_region">Demander un devis</a>
+          <a href={site.phoneHref} class="btn btn--light btn--lg" data-track="call_region">
+            <Icon name="phone" /> {site.phone}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container region-body">
+      <div class="prose" data-reveal>
+        {paragraphs.map((p) => <p set:html={p} />)}
+      </div>
+      <aside class="card region-aside" data-reveal data-reveal-delay="120">
+        <h3>Nos prestations</h3>
+        <ul class="check-list">
+          {services.map((s) => <li><a href={`/${s.slug}`}>{s.name}</a></li>)}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  {featuredCities.length > 0 && (
+    <section class="section section--tight">
+      <div class="container" data-reveal>
+        <h2>Communes desservies</h2>
+        <p class="lead">Quelques villes où Courtin Bat intervient régulièrement&nbsp;:</p>
+        <div class="region-cities">
+          {featuredCities.map((c) => (
+            <a href={`/villes/${c!.slug}`} class="badge"><Icon name="pin" /> {c!.name}</a>
+          ))}
+          <a href="/zone-intervention" class="badge badge--more">Toutes les villes →</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <FAQ items={faq} title="Questions fréquentes" eyebrow="FAQ locale" />
+  <CTASection />
+  <QuoteForm />
+</Layout>
+
+<style>
+  .region-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .region-hero__inner { max-width: 62ch; margin-top: 1.5rem; }
+  .region-hero__actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.6rem; }
+  .region-body { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .region-aside ul a { color: var(--ink-2); }
+  .region-aside ul a:hover { color: var(--steel); }
+  .region-cities { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.2rem; }
+  .region-cities .badge:hover { border-color: var(--steel-2); }
+  .badge--more { background: var(--steel); color: #fff; border-color: var(--steel); }
+  @media (max-width: 820px) { .region-body { grid-template-columns: 1fr; } }
+</style>

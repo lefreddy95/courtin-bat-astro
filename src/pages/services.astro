@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CTASection from '../components/CTASection.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import FAQ from '../components/FAQ.astro';
+import { services } from '../data/services';
+import { homeFaq } from '../data/faq';
+
+const title = 'Services de plomberie et de chauffage | Courtin Bat';
+const description =
+  'Découvrez les services de Courtin Bat dans le Vexin et le Val-d’Oise : dépannage plomberie, recherche de fuite, chauffage, chauffe-eau, rénovation de salle de bain et génie climatique.';
+---
+<Layout title={title} description={description} path="/services" transparentHeader>
+  <section class="section page-hero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Services', path: '/services' }]} />
+      <div class="page-hero__inner" data-reveal>
+        <span class="eyebrow">Nos prestations</span>
+        <h1>Une expertise complète en plomberie et chauffage</h1>
+        <p class="lead">
+          Du dépannage d’urgence à la rénovation, Courtin Bat vous accompagne sur l’ensemble
+          de vos besoins, avec un travail propre, fiable et durable.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--3">
+        {services.map((s, i) => <ServiceCard service={s} delay={(i % 3) * 80} />)}
+      </div>
+    </div>
+  </section>
+
+  <FAQ items={homeFaq} title="Questions fréquentes" />
+  <CTASection />
+  <QuoteForm />
+</Layout>
+
+<style>
+  .page-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .page-hero__inner { max-width: 60ch; margin-top: 1.5rem; }
+</style>

@@ -1,0 +1,34 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  name: string;
+  city: string;
+  rating?: number;
+  text: string;
+  delay?: number;
+}
+const { name, city, rating = 5, text, delay = 0 } = Astro.props;
+---
+<figure class="card review-card" data-reveal data-reveal-delay={delay}>
+  <div class="review-card__stars" aria-label={`Note : ${rating} sur 5`}>
+    {Array.from({ length: rating }).map(() => <Icon name="star" />)}
+  </div>
+  <blockquote>{text}</blockquote>
+  <figcaption>
+    <strong>{name}</strong>
+    <span>{city}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .review-card { display: flex; flex-direction: column; gap: 0.9rem; }
+  .review-card__stars { display: flex; gap: 2px; color: var(--copper); }
+  .review-card__stars :global(svg) { width: 18px; height: 18px; fill: var(--copper); stroke: var(--copper); }
+  .review-card blockquote {
+    font-size: 1.02rem; color: var(--ink); line-height: 1.6; font-style: italic;
+  }
+  .review-card figcaption { margin-top: auto; display: flex; flex-direction: column; }
+  .review-card figcaption strong { color: var(--steel-deep); font-family: var(--font-head); }
+  .review-card figcaption span { font-size: 0.9rem; color: var(--ink-2); }
+</style>

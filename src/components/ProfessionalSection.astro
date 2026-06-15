@@ -1,0 +1,43 @@
+---
+import QualificationCard from './QualificationCard.astro';
+
+const cards = [
+  {
+    icon: 'graduation',
+    title: 'Formation reconnue',
+    body: 'Un plombier chauffagiste diplômé, formé dans un centre d’État spécialisé en plomberie, chauffage et génie climatique.',
+  },
+  {
+    icon: 'ruler',
+    title: 'Normes & règles de l’art',
+    body: 'Des interventions conformes, exécutées proprement et selon les bonnes pratiques du métier.',
+  },
+  {
+    icon: 'shield',
+    title: 'Sécurité & conformité',
+    body: 'Des installations sécurisées qui protègent votre logement et votre famille au quotidien.',
+  },
+  {
+    icon: 'sparkle',
+    title: 'Sérieux & propreté',
+    body: 'Un chantier soigné, protégé et nettoyé : le respect de votre intérieur du début à la fin.',
+  },
+];
+---
+<section class="section reassurance" id="atouts">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Pourquoi Courtin Bat</span>
+      <h2>Un vrai savoir-faire artisanal, au service de votre confort</h2>
+      <p class="lead">
+        Courtin Bat met en avant un vrai savoir-faire artisanal, une formation solide et des
+        interventions réalisées avec soin.
+      </p>
+    </div>
+    <div class="grid grid--4">
+      {cards.map((c, i) => (
+        <QualificationCard icon={c.icon} title={c.title} body={c.body} delay={i * 80} />
+      ))}
+    </div>
+  </div>
+</section>

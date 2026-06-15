@@ -1,0 +1,158 @@
+---
+import { site } from '../data/site';
+import { navLinks } from '../data/nav';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+
+interface Props {
+  transparent?: boolean;
+}
+const { transparent = false } = Astro.props;
+
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<header class="header" data-header class:list={[{ 'header--transparent': transparent }]}>
+  <div class="header__inner container">
+    <a href="/" class="header__logo" aria-label="Accueil — Courtin Bat, plombier chauffagiste">
+      <Logo size={42} />
+    </a>
+
+    <nav class="header__nav" aria-label="Navigation principale">
+      {navLinks.map((l) => (
+        <a
+          href={l.href}
+          class:list={['header__link', { 'is-active': current === l.href.replace(/\/$/, '') }]}
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="header__actions">
+      <a href={site.phoneHref} class="header__phone" data-track="call_header" aria-label={`Appeler le ${site.phone}`}>
+        <Icon name="phone" />
+        <span>{site.phone}</span>
+      </a>
+      <a href="/contact" class="btn btn--primary header__cta" data-track="quote_header">Demander un devis</a>
+      <button
+        class="header__burger"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Ouvrir le menu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: background-color 0.4s var(--ease), box-shadow 0.4s var(--ease),
+      backdrop-filter 0.4s var(--ease);
+    background: transparent;
+  }
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: var(--header-h);
+  }
+  .header__logo { color: var(--ink); display: inline-flex; }
+
+  /* État non scrollé : fond clair par défaut (pages sans hero sombre) */
+  .header:not(.header--transparent) {
+    background: rgba(245, 245, 246, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* Glassmorphism au scroll */
+  .header.scrolled {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px) saturate(140%);
+    box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .header__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: auto;
+  }
+  .header__link {
+    padding: 0.5rem 0.7rem;
+    border-radius: 10px;
+    font-size: 0.93rem;
+    font-weight: 500;
+    color: var(--ink-2);
+    transition: color 0.25s, background-color 0.25s;
+  }
+  .header__link:hover { color: var(--ink); background: rgba(47,77,104,0.06); }
+  .header__link.is-active { color: var(--steel); font-weight: 600; }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .header__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--steel-deep);
+    padding: 0.5rem 0.6rem;
+    border-radius: 10px;
+  }
+  .header__phone svg { width: 18px; height: 18px; color: var(--copper); }
+  .header__phone:hover { background: rgba(47,77,104,0.06); }
+
+  /* Header transparent (hero sombre) : texte clair tant que non scrollé */
+  .header--transparent:not(.scrolled) .header__link,
+  .header--transparent:not(.scrolled) .header__phone {
+    color: rgba(255,255,255,0.92);
+  }
+  .header--transparent:not(.scrolled) .header__phone svg { color: #fff; }
+  .header--transparent:not(.scrolled) .header__link:hover,
+  .header--transparent:not(.scrolled) .header__phone:hover {
+    background: rgba(255,255,255,0.12);
+  }
+  .header--transparent:not(.scrolled) .header__burger span { background: #fff; }
+  .header--transparent:not(.scrolled) .header__logo { color: #fff; }
+
+  .header__burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px; height: 44px;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0 11px;
+  }
+  .header__burger span {
+    display: block; height: 2px;
+    background: var(--steel-deep);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  @media (max-width: 1080px) {
+    .header__nav { display: none; }
+    .header__phone span { display: none; }
+  }
+  @media (max-width: 768px) {
+    .header__cta { display: none; }
+    .header__burger { display: flex; }
+  }
+</style>

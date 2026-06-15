@@ -1,0 +1,85 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import CTASection from '../components/CTASection.astro';
+import Icon from '../components/Icon.astro';
+
+const title = 'Réalisations | Courtin Bat, plombier chauffagiste Vexin & Val-d’Oise';
+const description =
+  'Découvrez quelques réalisations de Courtin Bat dans le Vexin et le Val-d’Oise : rénovations de salle de bain, installations de chauffage, remplacements de chauffe-eau et dépannages.';
+
+// ⚠️ Remplacer par de vraies photos avant/après dans /public/assets/images/
+const projects = [
+  { title: 'Rénovation complète de salle de bain', city: 'Magny-en-Vexin', tag: 'Salle de bain' },
+  { title: 'Remplacement de chauffe-eau', city: 'Cergy', tag: 'Chauffe-eau' },
+  { title: 'Installation de radiateurs', city: 'Pontoise', tag: 'Chauffage' },
+  { title: 'Création d’une douche à l’italienne', city: 'Marines', tag: 'Salle de bain' },
+  { title: 'Recherche et réparation de fuite', city: 'Vigny', tag: 'Recherche de fuite' },
+  { title: 'Remplacement de chaudière', city: 'Auvers-sur-Oise', tag: 'Chauffage' },
+];
+---
+<Layout title={title} description={description} path="/realisations" transparentHeader>
+  <section class="section page-hero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Réalisations', path: '/realisations' }]} />
+      <div class="page-hero__inner" data-reveal>
+        <span class="eyebrow">Réalisations</span>
+        <h1>Un travail propre, fiable et durable</h1>
+        <p class="lead">
+          Quelques exemples d’interventions menées avec soin dans le Vexin et le Val-d’Oise.
+          De nouvelles photos sont ajoutées régulièrement.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--3">
+        {projects.map((p, i) => (
+          <article class="card project" data-reveal data-reveal-delay={(i % 3) * 80}>
+            <div class="project__img" role="img" aria-label={`Réalisation : ${p.title} à ${p.city}`}>
+              <Icon name="sparkle" />
+              <span>Photo à ajouter</span>
+              <em class="project__tag">{p.tag}</em>
+            </div>
+            <div class="project__body">
+              <h3>{p.title}</h3>
+              <p><Icon name="pin" /> {p.city}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="Un projet similaire ?"
+    text="Parlez-nous de votre projet : Courtin Bat vous conseille et vous propose un devis clair et transparent."
+  />
+</Layout>
+
+<style>
+  .page-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .page-hero__inner { max-width: 60ch; margin-top: 1.5rem; }
+  .project { padding: 0; overflow: hidden; }
+  .project__img {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--grad-steel);
+    color: rgba(255,255,255,0.7);
+    display: grid; place-content: center; justify-items: center; gap: 0.4rem;
+  }
+  .project__img :global(svg) { width: 34px; height: 34px; }
+  .project__img span { font-size: 0.85rem; }
+  .project__tag {
+    position: absolute; top: 0.8rem; left: 0.8rem;
+    background: rgba(255,255,255,0.16); color: #fff;
+    font-style: normal; font-size: 0.75rem; font-weight: 600;
+    padding: 0.25rem 0.6rem; border-radius: 999px;
+    backdrop-filter: blur(6px);
+  }
+  .project__body { padding: 1.1rem 1.3rem 1.3rem; }
+  .project__body p { display: flex; align-items: center; gap: 0.4rem; color: var(--ink-2); font-size: 0.9rem; margin-top: 0.3rem; }
+  .project__body :global(svg) { width: 15px; height: 15px; color: var(--copper); }
+</style>

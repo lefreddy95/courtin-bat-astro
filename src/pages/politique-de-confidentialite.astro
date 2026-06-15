@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { site } from '../data/site';
+
+const title = 'Politique de confidentialité | Courtin Bat';
+const description = 'Politique de confidentialité et traitement des données personnelles du site Courtin Bat.';
+---
+<Layout title={title} description={description} path="/politique-de-confidentialite" noindex transparentHeader>
+  <section class="section page-hero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Confidentialité', path: '/politique-de-confidentialite' }]} />
+      <h1 style="margin-top:1.2rem">Politique de confidentialité</h1>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container prose" style="max-width:760px">
+      <h2>Données collectées</h2>
+      <p>
+        Le formulaire de devis collecte les informations que vous fournissez (nom, email,
+        téléphone, ville, type de demande, message) uniquement dans le but de traiter votre
+        demande et de vous recontacter.
+      </p>
+      <h2>Utilisation des données</h2>
+      <p>
+        Vos données ne sont ni vendues ni cédées à des tiers. Elles sont conservées le temps
+        nécessaire au traitement de votre demande.
+      </p>
+      <h2>Vos droits</h2>
+      <p>
+        Conformément au RGPD, vous disposez d’un droit d’accès, de rectification et de
+        suppression de vos données. Pour l’exercer, contactez-nous à {site.email}.
+      </p>
+      <h2>Cookies & mesure d’audience</h2>
+      <p>
+        Ce site peut utiliser un outil de mesure d’audience respectueux de la vie privée.
+        Aucun cookie publicitaire n’est déposé.
+      </p>
+      <p><em>Document à compléter et à faire valider avant la mise en production.</em></p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+</style>

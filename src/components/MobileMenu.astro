@@ -1,0 +1,82 @@
+---
+import { site } from '../data/site';
+import { navLinks } from '../data/nav';
+import { services } from '../data/services';
+import Icon from './Icon.astro';
+---
+<div class="mmenu" id="mobile-menu" data-mobile-menu aria-hidden="true">
+  <nav class="mmenu__nav" aria-label="Menu mobile">
+    {navLinks.map((l) => (
+      <a href={l.href} class="mmenu__link">{l.label}</a>
+    ))}
+
+    <div class="mmenu__group">
+      <span class="mmenu__label">Nos prestations</span>
+      {services.map((s) => (
+        <a href={`/${s.slug}`} class="mmenu__sublink">{s.name}</a>
+      ))}
+    </div>
+
+    <div class="mmenu__cta">
+      <a href={site.phoneHref} class="btn btn--copper btn--block" data-track="call_menu">
+        <Icon name="phone" /> Appeler
+      </a>
+      <a href="/contact" class="btn btn--primary btn--block" data-track="quote_menu">Demander un devis</a>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .mmenu {
+    position: fixed;
+    inset: var(--header-h) 0 0 0;
+    z-index: 99;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(140%);
+    transform: translateX(100%);
+    transition: transform 0.4s var(--ease);
+    overflow-y: auto;
+    padding: 1.5rem var(--gutter) 3rem;
+    visibility: hidden;
+  }
+  .mmenu.open { transform: translateX(0); visibility: visible; }
+
+  .mmenu__nav { display: flex; flex-direction: column; gap: 0.2rem; }
+  .mmenu__link {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.3rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .mmenu__group {
+    margin-top: 1.4rem;
+    padding-top: 0.5rem;
+  }
+  .mmenu__label {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--steel-2);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .mmenu__sublink {
+    display: block;
+    padding: 0.55rem 0;
+    color: var(--ink-2);
+    font-size: 1.02rem;
+  }
+  .mmenu__cta {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 769px) {
+    .mmenu { display: none; }
+  }
+  :global(body.menu-open) { overflow: hidden; }
+</style>

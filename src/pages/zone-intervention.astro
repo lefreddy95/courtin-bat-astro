@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import CTASection from '../components/CTASection.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Icon from '../components/Icon.astro';
+import { cities } from '../data/cities';
+
+const title = 'Zone d’intervention | Plombier chauffagiste Vexin & Val-d’Oise';
+const description =
+  'Courtin Bat intervient dans tout le Vexin, le Val-d’Oise et Cergy-Pontoise. Découvrez la liste des communes desservies pour vos travaux de plomberie et de chauffage.';
+
+// Regrouper les villes par secteur
+const groups = cities.reduce((acc, c) => {
+  (acc[c.secteur] ||= []).push(c);
+  return acc;
+}, {} as Record<string, typeof cities>);
+const groupEntries = Object.entries(groups).sort((a, b) => b[1].length - a[1].length);
+---
+<Layout title={title} description={description} path="/zone-intervention" transparentHeader>
+  <section class="section page-hero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Zone d’intervention', path: '/zone-intervention' }]} />
+      <div class="page-hero__inner" data-reveal>
+        <span class="eyebrow"><Icon name="pin" /> Zone d’intervention</span>
+        <h1>Un plombier chauffagiste proche de chez vous</h1>
+        <p class="lead">
+          Courtin Bat intervient sur l’ensemble du Vexin et du Val-d’Oise, ainsi que dans la
+          région de Cergy-Pontoise et les départements limitrophes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {groupEntries.map(([secteur, list]) => (
+        <div class="zone-group" data-reveal>
+          <h2 class="zone-group__title"><Icon name="pin" /> {secteur}</h2>
+          <ul class="zone-group__list">
+            {list.map((c) => (
+              <li><a href={`/villes/${c.slug}`}>Plombier {c.name}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CTASection />
+  <QuoteForm />
+</Layout>
+
+<style>
+  .page-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .page-hero__inner { max-width: 62ch; margin-top: 1.5rem; }
+  .zone-group { margin-bottom: 2.5rem; }
+  .zone-group__title {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 1.25rem; margin-bottom: 1rem;
+    padding-bottom: 0.6rem; border-bottom: 1px solid var(--line);
+  }
+  .zone-group__title :global(svg) { width: 20px; height: 20px; color: var(--copper); }
+  .zone-group__list {
+    list-style: none; padding: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem;
+  }
+  .zone-group__list a { color: var(--ink-2); font-size: 0.93rem; padding: 0.3rem 0; }
+  .zone-group__list a:hover { color: var(--steel); }
+  @media (max-width: 900px) { .zone-group__list { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px) { .zone-group__list { grid-template-columns: repeat(2, 1fr); } }
+</style>

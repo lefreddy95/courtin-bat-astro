@@ -1,0 +1,61 @@
+/* ==========================================================================
+   COURTIN BAT — Design tokens
+   Palette bleu acier premium, esprit Apple / Linear.
+   ========================================================================== */
+
+:root {
+  /* Couleurs de fond */
+  --bg: #f5f5f6;          /* blanc cassé */
+  --bg-2: #ffffff;        /* blanc pur */
+  --surface: #ffffff;     /* cartes */
+  --surface-2: #f0f2f4;   /* surface secondaire / hover */
+
+  /* Texte */
+  --ink: #16161a;         /* noir doux */
+  --ink-2: #585a62;       /* gris texte */
+
+  /* Bleus acier — couleur de marque */
+  --steel: #2f4d68;       /* bleu acier profond */
+  --steel-2: #3a5d7c;     /* bleu plus clair */
+  --steel-deep: #213a51;  /* bleu sombre */
+
+  /* Accent cuivre discret */
+  --copper: #b06a3c;
+
+  /* Lignes & bordures */
+  --line: rgba(33, 58, 81, 0.12);
+  --line-strong: rgba(33, 58, 81, 0.22);
+
+  /* Ombres */
+  --shadow-sm: 0 1px 2px rgba(33, 58, 81, 0.06), 0 1px 3px rgba(33, 58, 81, 0.08);
+  --shadow-md: 0 6px 16px rgba(33, 58, 81, 0.10), 0 2px 6px rgba(33, 58, 81, 0.06);
+  --shadow-lg: 0 24px 60px rgba(33, 58, 81, 0.16), 0 8px 24px rgba(33, 58, 81, 0.10);
+
+  /* Rayons */
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 28px;
+
+  /* Layout */
+  --maxw: 1180px;
+  --gutter: clamp(1.1rem, 4vw, 2.5rem);
+
+  /* Typographies */
+  --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-head: 'Schibsted Grotesk', 'Hanken Grotesk', system-ui, sans-serif;
+
+  /* Dégradés premium */
+  --grad-steel: linear-gradient(135deg, var(--steel-deep) 0%, var(--steel) 55%, var(--steel-2) 100%);
+  --grad-hero: radial-gradient(120% 120% at 80% 0%, #3a5d7c 0%, #2f4d68 45%, #213a51 100%);
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.5);
+
+  /* Transitions */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 0.45s;
+
+  /* Hauteur du header sticky (utilisée pour scroll-padding) */
+  --header-h: 76px;
+}

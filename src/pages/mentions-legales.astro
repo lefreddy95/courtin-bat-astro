@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { site } from '../data/site';
+
+const title = 'Mentions légales | Courtin Bat';
+const description = 'Mentions légales du site Courtin Bat, plombier chauffagiste dans le Vexin et le Val-d’Oise.';
+---
+<Layout title={title} description={description} path="/mentions-legales" noindex transparentHeader>
+  <section class="section page-hero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Mentions légales', path: '/mentions-legales' }]} />
+      <h1 style="margin-top:1.2rem">Mentions légales</h1>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container prose" style="max-width:760px">
+      <h2>Éditeur du site</h2>
+      <p>
+        {site.name}<br />
+        Plombier chauffagiste<br />
+        Secteur&nbsp;: {site.address.locality}<br />
+        Adresse&nbsp;: {site.address.street}<br />
+        SIRET&nbsp;: {site.siret}<br />
+        Téléphone&nbsp;: {site.phone}<br />
+        Email&nbsp;: {site.email}
+      </p>
+      <h2>Hébergement</h2>
+      <p>
+        Ce site est hébergé par Netlify, Inc. — 512 2nd Street, Suite 200, San Francisco, CA 94107, USA.
+      </p>
+      <h2>Propriété intellectuelle</h2>
+      <p>
+        L’ensemble des contenus de ce site (textes, images, logo) est la propriété de {site.name},
+        sauf mention contraire. Toute reproduction sans autorisation est interdite.
+      </p>
+      <h2>Responsabilité</h2>
+      <p>
+        {site.name} s’efforce d’assurer l’exactitude des informations publiées mais ne saurait
+        être tenu responsable d’éventuelles erreurs ou omissions.
+      </p>
+      <p><em>Document à compléter et à faire valider avant la mise en production.</em></p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+</style>

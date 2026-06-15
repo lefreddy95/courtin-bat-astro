@@ -1,0 +1,49 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+---
+<div class="mcta" aria-label="Actions rapides">
+  <a href={site.phoneHref} class="mcta__btn mcta__btn--call" data-track="call_sticky">
+    <Icon name="phone" />
+    <span>Appeler</span>
+  </a>
+  <a href="/contact" class="mcta__btn mcta__btn--quote" data-track="quote_sticky">
+    <Icon name="mail" />
+    <span>Devis</span>
+  </a>
+</div>
+
+<style>
+  .mcta {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 95;
+    display: none;
+    gap: 0.6rem;
+    padding: 0.7rem var(--gutter) calc(0.7rem + env(safe-area-inset-bottom, 0));
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--line);
+  }
+  .mcta__btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem;
+    border-radius: 12px;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .mcta__btn svg { width: 19px; height: 19px; }
+  .mcta__btn--call { background: var(--copper); color: #fff; }
+  .mcta__btn--quote { background-image: var(--grad-steel); color: #fff; }
+
+  @media (max-width: 768px) {
+    .mcta { display: flex; }
+    /* Laisser de l'espace au-dessus de la barre fixe */
+    :global(body) { padding-bottom: 74px; }
+  }
+</style>

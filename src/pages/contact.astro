@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+
+const title = 'Contact & devis | Courtin Bat, plombier chauffagiste Vexin & Val-d’Oise';
+const description =
+  'Contactez Courtin Bat, plombier chauffagiste dans le Vexin et le Val-d’Oise. Devis clair et gratuit par téléphone au 06 37 11 73 92 ou via le formulaire.';
+---
+<Layout title={title} description={description} path="/contact" transparentHeader>
+  <section class="section page-hero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Contact', path: '/contact' }]} />
+      <div class="page-hero__inner" data-reveal>
+        <span class="eyebrow">Contact</span>
+        <h1>Demandez votre devis gratuit</h1>
+        <p class="lead">
+          Une panne, un projet, une question ? Courtin Bat vous répond rapidement avec un
+          conseil clair et une estimation transparente.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="grid grid--4 contact-cards">
+        <a href={site.phoneHref} class="card contact-card" data-track="call_contact">
+          <span class="card__icon"><Icon name="phone" /></span>
+          <h3>Téléphone</h3>
+          <p>{site.phone}</p>
+        </a>
+        <a href={`mailto:${site.email}`} class="card contact-card">
+          <span class="card__icon"><Icon name="mail" /></span>
+          <h3>Email</h3>
+          <p>{site.email}</p>
+        </a>
+        <div class="card contact-card">
+          <span class="card__icon"><Icon name="clock" /></span>
+          <h3>Horaires</h3>
+          <p>Lun–Ven 8h–19h<br />Sam 9h–18h<br />Dim : urgences</p>
+        </div>
+        <div class="card contact-card">
+          <span class="card__icon"><Icon name="pin" /></span>
+          <h3>Secteur</h3>
+          <p>Vexin · Val-d’Oise · Cergy-Pontoise</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <QuoteForm />
+</Layout>
+
+<style>
+  .page-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .page-hero__inner { max-width: 60ch; margin-top: 1.5rem; }
+  .contact-card { text-align: left; }
+  .contact-card h3 { font-size: 1.05rem; margin-bottom: 0.3rem; }
+  .contact-card p { color: var(--ink-2); font-size: 0.95rem; }
+  a.contact-card p { color: var(--steel-deep); font-weight: 600; }
+</style>

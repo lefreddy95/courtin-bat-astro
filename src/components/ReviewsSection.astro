@@ -1,0 +1,78 @@
+---
+import { reviews, aggregateRating } from '../data/reviews';
+import { site, SITE_URL } from '../data/site';
+import ReviewCard from './ReviewCard.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  limit?: number;
+  schema?: boolean;
+}
+const { limit = 3, schema = false } = Astro.props;
+const shown = reviews.slice(0, limit);
+
+const reviewSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${SITE_URL}/#business`,
+  name: site.name,
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: aggregateRating.value,
+    reviewCount: aggregateRating.count,
+    bestRating: 5,
+  },
+  review: reviews.map((r) => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: r.name },
+    reviewRating: { '@type': 'Rating', ratingValue: r.rating, bestRating: 5 },
+    reviewBody: r.text,
+    ...(r.date ? { datePublished: r.date } : {}),
+  })),
+};
+---
+<section class="section reviews" id="avis">
+  <div class="container">
+    <div class="reviews__head" data-reveal>
+      <div class="section-head" style="margin-bottom:0">
+        <span class="eyebrow">Avis clients</span>
+        <h2>Ils ont fait confiance à Courtin Bat</h2>
+      </div>
+      <div class="reviews__rating">
+        <div class="reviews__stars">
+          {Array.from({ length: 5 }).map(() => <Icon name="star" />)}
+        </div>
+        <span><strong>{aggregateRating.value.toFixed(1)}</strong> / 5 · {aggregateRating.count} avis</span>
+      </div>
+    </div>
+
+    <div class="grid grid--3">
+      {shown.map((r, i) => (
+        <ReviewCard name={r.name} city={r.city} rating={r.rating} text={r.text} delay={(i % 3) * 80} />
+      ))}
+    </div>
+
+    <div class="reviews__cta" data-reveal>
+      <a href="/avis-clients" class="link-arrow">Voir tous les avis <Icon name="arrow" /></a>
+    </div>
+  </div>
+</section>
+
+{schema && <script type="application/ld+json" set:html={JSON.stringify(reviewSchema)} />}
+
+<style>
+  .reviews__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    flex-wrap: wrap;
+  }
+  .reviews__rating { display: flex; flex-direction: column; gap: 0.3rem; }
+  .reviews__stars { display: flex; gap: 2px; color: var(--copper); }
+  .reviews__stars :global(svg) { width: 20px; height: 20px; fill: var(--copper); stroke: var(--copper); }
+  .reviews__rating span { font-size: 0.95rem; color: var(--ink-2); }
+  .reviews__rating strong { color: var(--steel-deep); font-size: 1.1rem; }
+  .reviews__cta { margin-top: 2rem; }
+</style>

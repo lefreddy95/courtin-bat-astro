@@ -1,0 +1,16 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  icon: string;
+  title: string;
+  body: string;
+  delay?: number;
+}
+const { icon, title, body, delay = 0 } = Astro.props;
+---
+<div class="card qual-card" data-reveal data-reveal-delay={delay}>
+  <span class="card__icon"><Icon name={icon} /></span>
+  <h3>{title}</h3>
+  <p>{body}</p>
+</div>

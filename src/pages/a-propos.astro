@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import CTASection from '../components/CTASection.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Icon from '../components/Icon.astro';
+
+const title = 'À propos de Courtin Bat | Artisan plombier chauffagiste';
+const description =
+  'Courtin Bat, artisan plombier chauffagiste diplômé dans le Vexin et le Val-d’Oise. Un savoir-faire professionnel, une approche sérieuse, transparente et rassurante au service de votre confort.';
+const values = [
+  { icon: 'check', title: 'Sérieux', body: 'Une approche transparente et un travail mené avec rigueur, du diagnostic à la finition.' },
+  { icon: 'sparkle', title: 'Propreté', body: 'Un chantier protégé, ordonné et nettoyé : le respect de votre intérieur.' },
+  { icon: 'shield', title: 'Durabilité', body: 'Des installations conformes et pensées pour durer dans le temps.' },
+  { icon: 'pin', title: 'Proximité', body: 'Un artisan local à l’écoute, présent dans le Vexin et le Val-d’Oise.' },
+];
+---
+<Layout title={title} description={description} path="/a-propos" transparentHeader>
+  <section class="section page-hero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'À propos', path: '/a-propos' }]} />
+      <div class="page-hero__inner" data-reveal>
+        <span class="eyebrow">L’entreprise</span>
+        <h1>Un artisan local de confiance</h1>
+        <p class="lead">
+          Courtin Bat, c’est l’histoire d’un plombier chauffagiste diplômé qui met son
+          savoir-faire au service du confort des particuliers du Vexin et du Val-d’Oise.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose" style="max-width:760px" data-reveal>
+      <p>
+        Formé aux métiers de la plomberie, du chauffage et du génie climatique dans un centre
+        d’État spécialisé, Courtin Bat aborde chaque intervention avec la même exigence&nbsp;:
+        un travail propre, fiable et durable, réalisé dans les règles de l’art.
+      </p>
+      <h2>Une expertise complète</h2>
+      <p>
+        Du dépannage d’une fuite au remplacement d’un chauffe-eau, de l’entretien du chauffage
+        à la rénovation d’une salle de bain, Courtin Bat vous apporte une expertise complète en
+        plomberie et chauffage, ainsi qu’un conseil clair pour chaque projet.
+      </p>
+      <h2>Une approche rassurante</h2>
+      <p>
+        Devis transparent, explications simples, intervention soignée&nbsp;: l’objectif est de
+        vous permettre d’avancer en toute sérénité. Une approche sérieuse, transparente et
+        rassurante, qui fait toute la différence.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Nos valeurs</span>
+        <h2>Ce qui guide chaque intervention</h2>
+      </div>
+      <div class="grid grid--4">
+        {values.map((v, i) => (
+          <div class="card" data-reveal data-reveal-delay={i * 80}>
+            <span class="card__icon"><Icon name={v.icon} /></span>
+            <h3>{v.title}</h3>
+            <p>{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+  <QuoteForm />
+</Layout>
+
+<style>
+  .page-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .page-hero__inner { max-width: 60ch; margin-top: 1.5rem; }
+</style>

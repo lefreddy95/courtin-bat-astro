@@ -1,0 +1,21 @@
+---
+import Icon from './Icon.astro';
+import type { Service } from '../data/services';
+
+interface Props {
+  service: Service;
+  delay?: number;
+}
+const { service, delay = 0 } = Astro.props;
+---
+<a href={`/${service.slug}`} class="card service-card" data-reveal data-reveal-delay={delay}>
+  <span class="card__icon"><Icon name={service.icon} /></span>
+  <h3>{service.name}</h3>
+  <p>{service.excerpt}</p>
+  <span class="link-arrow">En savoir plus <Icon name="arrow" /></span>
+</a>
+
+<style>
+  .service-card { display: flex; flex-direction: column; }
+  .service-card .link-arrow { margin-top: auto; padding-top: 1rem; }
+</style>

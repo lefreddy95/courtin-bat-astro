@@ -1,0 +1,157 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Pré-remplir la ville (pages locales) */
+  defaultCity?: string;
+  title?: string;
+}
+const { defaultCity = '', title = 'Demander un devis gratuit' } = Astro.props;
+
+const requestTypes = [
+  'Dépannage plomberie',
+  'Recherche de fuite',
+  'Chauffage',
+  'Chauffe-eau',
+  'Rénovation salle de bain',
+  'Climatisation / génie climatique',
+  'Autre demande',
+];
+---
+<section class="section quote" id="devis">
+  <div class="container quote__inner">
+    <div class="quote__intro" data-reveal>
+      <span class="eyebrow">Devis</span>
+      <h2>{title}</h2>
+      <p class="lead">
+        Décrivez votre besoin en quelques mots : Courtin Bat vous recontacte rapidement
+        avec un conseil clair et une estimation transparente.
+      </p>
+      <ul class="quote__contact">
+        <li><Icon name="phone" /> <a href={site.phoneHref} data-track="call_form">{site.phone}</a></li>
+        <li><Icon name="mail" /> <a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li><Icon name="clock" /> Lun–Ven 8h–19h · Sam 9h–18h</li>
+        <li><Icon name="pin" /> Vexin · Val-d’Oise · Cergy-Pontoise</li>
+      </ul>
+    </div>
+
+    <div class="quote__form-wrap card" data-reveal>
+      <div class="quote__success" data-form-success hidden role="status">
+        <Icon name="check" />
+        <div>
+          <strong>Merci, votre demande a bien été envoyée&nbsp;!</strong>
+          <p>Courtin Bat vous recontacte dans les meilleurs délais.</p>
+        </div>
+      </div>
+
+      <form
+        name="quote"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/contact/?success=1"
+        class="quote__form"
+      >
+        <input type="hidden" name="form-name" value="quote" />
+        <p class="quote__hp" hidden>
+          <label>Ne pas remplir : <input name="bot-field" /></label>
+        </p>
+
+        <div class="quote__row">
+          <div class="field">
+            <label for="q-name">Nom *</label>
+            <input id="q-name" type="text" name="nom" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="q-phone">Téléphone *</label>
+            <input id="q-phone" type="tel" name="telephone" required autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="quote__row">
+          <div class="field">
+            <label for="q-email">Email *</label>
+            <input id="q-email" type="email" name="email" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="q-city">Ville</label>
+            <input id="q-city" type="text" name="ville" value={defaultCity} autocomplete="address-level2" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="q-type">Type de demande</label>
+          <select id="q-type" name="type_de_demande">
+            {requestTypes.map((t) => <option value={t}>{t}</option>)}
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="q-message">Votre message *</label>
+          <textarea id="q-message" name="message" rows="4" required
+            placeholder="Décrivez votre besoin (ex : remplacement de chauffe-eau à Magny-en-Vexin)…"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg btn--block">Envoyer ma demande</button>
+        <p class="quote__legal">* Champs obligatoires. Vos données ne servent qu'à traiter votre demande.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .quote__inner {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: start;
+  }
+  .quote__contact { list-style: none; padding: 0; margin-top: 1.5rem; display: grid; gap: 0.7rem; }
+  .quote__contact li { display: flex; align-items: center; gap: 0.6rem; color: var(--ink-2); }
+  .quote__contact svg { width: 18px; height: 18px; color: var(--copper); }
+  .quote__contact a { font-weight: 600; color: var(--steel-deep); }
+
+  .quote__form-wrap { padding: clamp(1.4rem, 3vw, 2.2rem); }
+  .quote__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+  .field label { font-size: 0.88rem; font-weight: 600; color: var(--steel-deep); }
+  .field input, .field select, .field textarea {
+    font: inherit;
+    font-size: 0.98rem;
+    padding: 0.72rem 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--bg-2);
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--steel-2);
+    box-shadow: 0 0 0 3px rgba(58, 93, 124, 0.16);
+  }
+  .field textarea { resize: vertical; }
+  .quote__legal { font-size: 0.82rem; color: var(--ink-2); margin-top: 0.8rem; text-align: center; }
+  .quote__hp { position: absolute; left: -9999px; }
+
+  .quote__success {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    background: rgba(47, 77, 104, 0.08);
+    border: 1px solid var(--steel-2);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.4rem;
+  }
+  .quote__success svg { width: 28px; height: 28px; color: var(--steel); flex: 0 0 auto; }
+  .quote__success p { font-size: 0.92rem; color: var(--ink-2); }
+
+  @media (max-width: 860px) {
+    .quote__inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .quote__row { grid-template-columns: 1fr; }
+  }
+</style>

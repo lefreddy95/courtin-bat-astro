@@ -1,0 +1,33 @@
+---
+import BreadcrumbSchema from './BreadcrumbSchema.astro';
+
+interface Crumb { name: string; path: string; }
+interface Props { items: Crumb[]; dark?: boolean; }
+const { items, dark = false } = Astro.props;
+---
+<nav class:list={['breadcrumb', { 'breadcrumb--dark': dark }]} aria-label="Fil d’Ariane">
+  <ol>
+    {items.map((c, i) => (
+      <li>
+        {i < items.length - 1 ? <a href={c.path}>{c.name}</a> : <span aria-current="page">{c.name}</span>}
+        {i < items.length - 1 && <span class="breadcrumb__sep" aria-hidden="true">/</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<BreadcrumbSchema items={items} />
+
+<style>
+  .breadcrumb ol {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    font-size: 0.88rem; color: var(--ink-2);
+  }
+  .breadcrumb li { display: flex; align-items: center; gap: 0.4rem; }
+  .breadcrumb a { color: var(--ink-2); }
+  .breadcrumb a:hover { color: var(--steel); text-decoration: underline; }
+  .breadcrumb span[aria-current] { color: var(--ink); font-weight: 600; }
+  .breadcrumb__sep { opacity: 0.5; }
+  .breadcrumb--dark ol, .breadcrumb--dark a, .breadcrumb--dark span { color: rgba(255,255,255,0.8); }
+  .breadcrumb--dark span[aria-current] { color: #fff; }
+</style>

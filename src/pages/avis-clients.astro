@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import CTASection from '../components/CTASection.astro';
+import Icon from '../components/Icon.astro';
+import { reviews, aggregateRating } from '../data/reviews';
+import { site, SITE_URL } from '../data/site';
+
+const title = 'Avis clients | Courtin Bat, plombier chauffagiste Vexin & Val-d’Oise';
+const description =
+  'Découvrez les avis des clients de Courtin Bat dans le Vexin et le Val-d’Oise. Un artisan plombier chauffagiste sérieux, propre et apprécié pour la qualité de ses interventions.';
+
+const reviewSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${SITE_URL}/#business`,
+  name: site.name,
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: aggregateRating.value,
+    reviewCount: aggregateRating.count,
+    bestRating: 5,
+  },
+  review: reviews.map((r) => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: r.name },
+    reviewRating: { '@type': 'Rating', ratingValue: r.rating, bestRating: 5 },
+    reviewBody: r.text,
+    ...(r.date ? { datePublished: r.date } : {}),
+  })),
+};
+---
+<Layout title={title} description={description} path="/avis-clients" transparentHeader>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(reviewSchema)} />
+
+  <section class="section page-hero surface-dark">
+    <div class="container">
+      <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Avis clients', path: '/avis-clients' }]} />
+      <div class="page-hero__inner" data-reveal>
+        <span class="eyebrow">Avis clients</span>
+        <h1>Ils ont fait confiance à Courtin Bat</h1>
+        <div class="page-hero__rating">
+          <div class="page-hero__stars">{Array.from({ length: 5 }).map(() => <Icon name="star" />)}</div>
+          <span><strong>{aggregateRating.value.toFixed(1)}</strong> / 5 — {aggregateRating.count} avis vérifiés</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--3">
+        {reviews.map((r, i) => (
+          <ReviewCard name={r.name} city={r.city} rating={r.rating} text={r.text} delay={(i % 3) * 80} />
+        ))}
+      </div>
+      <p class="avis-note" data-reveal>
+        Les avis présentés sont des exemples. Retrouvez nos avis vérifiés sur notre fiche
+        Google Business Profile (lien à compléter).
+      </p>
+    </div>
+  </section>
+
+  <CTASection />
+</Layout>
+
+<style>
+  .page-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .page-hero__inner { max-width: 60ch; margin-top: 1.5rem; }
+  .page-hero__rating { display: flex; align-items: center; gap: 0.7rem; margin-top: 1rem; flex-wrap: wrap; }
+  .page-hero__stars { display: flex; gap: 2px; color: var(--copper); }
+  .page-hero__stars :global(svg) { width: 20px; height: 20px; fill: var(--copper); stroke: var(--copper); }
+  .avis-note { margin-top: 2rem; font-size: 0.9rem; color: var(--ink-2); }
+</style>
