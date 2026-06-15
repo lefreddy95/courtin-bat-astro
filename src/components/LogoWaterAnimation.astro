@@ -14,6 +14,10 @@ import Logo from './Logo.astro';
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
   }
   
+  .logo-anim :global(.logo) {
+    filter: brightness(0) invert(1);
+  }
+  
   /* Fallback CSS (sans GSAP) */
   html:not(.js) .logo-anim {
     animation: float-logo 4s ease-in-out infinite;
