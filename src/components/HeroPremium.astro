@@ -121,22 +121,28 @@ const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Trav
     margin-left: calc(50% - 50vw);
   }
   
-  .hero__bg { 
-    position: absolute; 
+  .hero__bg {
+    position: absolute;
     inset: -15% 0; /* Parallax vertical uniquement */
-    z-index: 0; 
+    z-index: 0;
     height: 130%;
     width: 100%;
+    /* Isole le fond sur sa propre couche GPU : le parallax ne repeint plus la vidéo */
+    will-change: transform;
+    transform: translateZ(0);
   }
-  
+
   .hero__video {
     position: absolute;
     inset: 0;
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     object-position: center;
     background: #000;
+    /* Lecture vidéo accélérée par le GPU, sans repaint pendant le scroll */
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   
   .hero__overlay {
@@ -156,6 +162,8 @@ const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Trav
     opacity: 0.35;
     z-index: 2;
     animation: float 14s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
   }
   .hero__glow--1 {
     width: 500px; height: 500px;
