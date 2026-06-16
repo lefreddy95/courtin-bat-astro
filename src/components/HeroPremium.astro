@@ -6,15 +6,18 @@ import LogoWaterAnimation from './LogoWaterAnimation.astro';
 const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Travail soigné', 'Plomberie & chauffage'];
 ---
 <section class="hero" id="hero" data-water-scope-start>
-  <!-- Fond premium : vidéo cinématique et overlay -->
+  <!-- Fond premium : vidéo cinématique locale + overlays thématiques -->
   <div class="hero__bg" id="hero-bg" aria-hidden="true">
-    <video class="hero__video" autoplay muted loop playsinline poster="/assets/images/hero-poster.jpg">
-      <!-- Vidéo cinématique d'exemple (à remplacer par une vidéo locale si souhaité dans public/assets/hero.mp4) -->
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-close-up-of-a-man-working-on-plumbing-with-a-33767-large.mp4" type="video/mp4" />
+    <video class="hero__video" autoplay muted loop playsinline preload="auto">
+      <source src="/assets/cinematique-courtin-bat.mp4" type="video/mp4" />
     </video>
     <div class="hero__overlay"></div>
     <div class="hero__glow hero__glow--1"></div>
     <div class="hero__glow hero__glow--2"></div>
+    <div class="hero__glow hero__glow--3"></div>
+    <div class="hero__drops" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
   </div>
 
   <div class="container hero__inner">
