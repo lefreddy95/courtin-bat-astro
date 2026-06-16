@@ -145,10 +145,10 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
     background: rgba(255,255,255,0.12);
   }
   .header--transparent:not(.scrolled) .header__burger span { background: #fff; }
-  .header--transparent:not(.scrolled) .header__logo :global(.logo__img) {
-    background: #fff;
-    padding: 5px;
-    border-radius: 9px;
+  .header--transparent:not(.scrolled) .header__logo :global(.logo) { 
+    background: rgba(255, 255, 255, 0.95); 
+    padding: 0.25rem 0.4rem; 
+    border-radius: 8px; 
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   }
 
@@ -168,6 +168,29 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
     background: var(--steel-deep);
     border-radius: 2px;
     transition: transform 0.3s, opacity 0.3s;
+  }
+
+  /* Gestion du menu ouvert sur mobile : le header doit passer en mode clair */
+  :global(body.menu-open) .header {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(16px) saturate(140%) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+  }
+  :global(body.menu-open) .header__burger span { background: var(--steel-deep) !important; }
+  :global(body.menu-open) .header__logo :global(.logo) {
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Animation du logo du header au chargement */
+  .header__logo {
+    animation: fadeLogoIn 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeLogoIn {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
   @media (max-width: 1080px) {
