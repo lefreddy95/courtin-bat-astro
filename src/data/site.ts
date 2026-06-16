@@ -30,7 +30,7 @@ export const site = {
   },
 
   // Identifiants — À COMPLÉTER
-  siret: 'À compléter',
+  siret: '999 476 351 00013',
   googleBusinessProfile: '', // URL fiche Google Business Profile — À COMPLÉTER
 
   // Horaires

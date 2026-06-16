@@ -50,15 +50,14 @@ const { size = 44, class: className, showText = true } = Astro.props;
     white-space: nowrap;
   }
   .logo__text small {
-    font-size: 0.62rem;
-    letter-spacing: 0.16em;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
     font-weight: 600;
-    text-transform: uppercase;
     opacity: 0.72;
     white-space: nowrap;
   }
   @media (max-width: 400px) {
-    .logo__text small { display: none; }
     .logo__text strong { font-size: 1.05rem; }
+    .logo__text small { font-size: 0.68rem; }
   }
 </style>
