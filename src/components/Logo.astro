@@ -1,24 +1,64 @@
 ---
+/**
+ * Logo COURTIN BAT : marque (vrai logo SVG) + nom de l'entreprise.
+ * La couleur du texte suit `currentColor` → blanc sur fond sombre, foncé sur fond clair.
+ * L'icône (image) reste multicolore ; une pastille blanche est ajoutée par le contexte
+ * (header transparent / footer) pour rester lisible sur fond sombre.
+ */
 interface Props {
-  /** Hauteur du logo en px */
+  /** Hauteur de l'icône en px */
   size?: number;
   class?: string;
-  showText?: boolean; // Conservé pour rétrocompatibilité au cas où, mais le nouveau logo contient tout
+  /** Afficher le texte à côté de l'icône */
+  showText?: boolean;
 }
-const { size = 44, class: className } = Astro.props;
+const { size = 44, class: className, showText = true } = Astro.props;
 ---
-<img 
-  src="/assets/logo-courtin-bat.svg" 
-  alt="Logo Courtin Bat" 
-  class:list={['logo', className]} 
-  style={`height: ${size}px; width: auto;`} 
-  aria-label="Courtin Bat"
-/>
+<span class:list={['logo', className]}>
+  <img
+    src="/assets/logo-courtin-bat.svg"
+    alt="Logo Courtin Bat"
+    class="logo__img"
+    style={`height:${size}px; width:auto;`}
+    width={size}
+    height={size}
+  />
+  {showText && (
+    <span class="logo__text">
+      <strong>COURTIN BAT</strong>
+      <small>Plomberie · Chauffage</small>
+    </span>
+  )}
+</span>
 
 <style>
   .logo {
-    display: inline-block;
-    max-width: 100%;
-    object-fit: contain;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    line-height: 1;
+    color: inherit;
+  }
+  .logo__img { display: block; }
+  .logo__text { display: flex; flex-direction: column; gap: 3px; }
+  .logo__text strong {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.18rem;
+    letter-spacing: 0.02em;
+    color: currentColor;
+    white-space: nowrap;
+  }
+  .logo__text small {
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0.72;
+    white-space: nowrap;
+  }
+  @media (max-width: 400px) {
+    .logo__text small { display: none; }
+    .logo__text strong { font-size: 1.05rem; }
   }
 </style>

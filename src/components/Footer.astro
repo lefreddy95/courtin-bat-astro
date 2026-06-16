@@ -87,10 +87,11 @@ const year = new Date().getFullYear();
     gap: clamp(1.5rem, 3vw, 3rem);
     padding-bottom: 2.5rem;
   }
-  .footer__logo :global(.logo) { 
-    background: #fff; 
-    padding: 0.5rem; 
-    border-radius: 12px; 
+  .footer__logo { color: #fff; display: inline-flex; }
+  .footer__logo :global(.logo__img) {
+    background: #fff;
+    padding: 7px;
+    border-radius: 11px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
   }
   .footer__pitch { margin: 1rem 0; max-width: 38ch; font-size: 0.96rem; }

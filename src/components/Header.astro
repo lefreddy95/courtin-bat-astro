@@ -63,7 +63,14 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
     gap: 1rem;
     height: var(--header-h);
   }
-  .header__logo { color: var(--ink); display: inline-flex; }
+  .header__logo {
+    display: inline-flex;
+    align-items: center;
+    color: var(--ink);
+  }
+  /* Texte du logo en blanc quand le header est transparent (hero sombre) ;
+     la pastille blanche autour de l'icône est gérée plus bas. */
+  .header--transparent:not(.scrolled) .header__logo { color: #fff; }
 
   /* État non scrollé : fond clair par défaut (pages sans hero sombre) */
   .header:not(.header--transparent) {
@@ -127,10 +134,10 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
     background: rgba(255,255,255,0.12);
   }
   .header--transparent:not(.scrolled) .header__burger span { background: #fff; }
-  .header--transparent:not(.scrolled) .header__logo :global(.logo) { 
-    background: rgba(255, 255, 255, 0.95); 
-    padding: 0.25rem 0.4rem; 
-    border-radius: 8px; 
+  .header--transparent:not(.scrolled) .header__logo :global(.logo__img) {
+    background: #fff;
+    padding: 5px;
+    border-radius: 9px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   }
 

@@ -3,12 +3,11 @@ export interface NavLink {
   href: string;
 }
 
+/** Navigation principale (épurée). Les services détaillés restent
+ *  accessibles depuis la page Services et le menu mobile. */
 export const navLinks: NavLink[] = [
   { label: 'Accueil', href: '/' },
   { label: 'Services', href: '/services' },
-  { label: 'Dépannage', href: '/depannage-plomberie' },
-  { label: 'Chauffage', href: '/chauffage' },
-  { label: 'Salle de bain', href: '/renovation-salle-de-bain' },
   { label: 'Qualifications', href: '/qualifications' },
   { label: 'Zone d’intervention', href: '/zone-intervention' },
   { label: 'Contact', href: '/contact' },
