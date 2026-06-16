@@ -117,8 +117,10 @@ const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Trav
     min-height: max(80vh, 600px);
     display: flex;
     align-items: center;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
+    /* Le hero est déjà pleine largeur (bloc enfant de <main>, sans padding).
+       On évite 100vw qui, avec une scrollbar classique, déborde de ~18px
+       et décale le hero par rapport aux autres sections. */
+    width: 100%;
   }
   
   .hero__bg {
