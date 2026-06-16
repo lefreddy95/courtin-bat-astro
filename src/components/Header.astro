@@ -11,7 +11,7 @@ const { transparent = false } = Astro.props;
 
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
-<header class="header" data-header class:list={[{ 'header--transparent': transparent }]}>
+<header class="header" data-header>
   <div class="header__inner container">
     <a href="/" class="header__logo" aria-label="Accueil — Courtin Bat, plombier chauffagiste">
       <Logo size={42} />
@@ -128,29 +128,6 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
   }
   .header__phone svg { width: 18px; height: 18px; color: var(--copper); }
   .header__phone:hover { background: rgba(47,77,104,0.06); }
-
-  /* Header transparent (hero sombre / vidéo) : texte clair + ombre pour le contraste */
-  .header--transparent:not(.scrolled) .header__link,
-  .header--transparent:not(.scrolled) .header__phone {
-    color: #ffffff;
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
-  }
-  .header--transparent:not(.scrolled) .header__link.is-active {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.16);
-  }
-  .header--transparent:not(.scrolled) .header__phone svg { color: #fff; }
-  .header--transparent:not(.scrolled) .header__link:hover,
-  .header--transparent:not(.scrolled) .header__phone:hover {
-    background: rgba(255,255,255,0.12);
-  }
-  .header--transparent:not(.scrolled) .header__burger span { background: #fff; }
-  .header--transparent:not(.scrolled) .header__logo :global(.logo) { 
-    background: rgba(255, 255, 255, 0.95); 
-    padding: 0.25rem 0.4rem; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
 
   .header__burger {
     display: none;
