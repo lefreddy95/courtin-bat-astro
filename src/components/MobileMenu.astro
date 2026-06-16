@@ -4,8 +4,9 @@ import { navLinks } from '../data/nav';
 import { services } from '../data/services';
 import Icon from './Icon.astro';
 ---
-<div class="mmenu" id="mobile-menu" data-mobile-menu aria-hidden="true">
-  <nav class="mmenu__nav" aria-label="Menu mobile">
+<div class="mmenu-overlay">
+  <div class="mmenu" id="mobile-menu" data-mobile-menu aria-hidden="true">
+    <nav class="mmenu__nav" aria-label="Menu mobile">
     {navLinks.map((l) => (
       <a href={l.href} class="mmenu__link">{l.label}</a>
     ))}
@@ -24,20 +25,32 @@ import Icon from './Icon.astro';
       <a href="/contact" class="btn btn--primary btn--block" data-track="quote_menu">Demander un devis</a>
     </div>
   </nav>
+  </div>
 </div>
 
 <style>
-  .mmenu {
+  /* Conteneur fixe couvrant le viewport : il clippe le panneau translaté
+     hors-écran (overflow:hidden) pour éviter tout débordement horizontal
+     sur mobile — body{overflow-x:hidden} ne contient pas un élément fixed. */
+  .mmenu-overlay {
     position: fixed;
     inset: var(--header-h) 0 0 0;
     z-index: 99;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .mmenu {
+    position: absolute;
+    inset: 0;
     background: var(--glass-bg);
     backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
     transform: translateX(100%);
     transition: transform 0.4s var(--ease);
     overflow-y: auto;
     padding: 1.5rem var(--gutter) 3rem;
     visibility: hidden;
+    pointer-events: auto;
   }
   .mmenu.open { transform: translateX(0); visibility: visible; }
 
@@ -76,7 +89,7 @@ import Icon from './Icon.astro';
   }
 
   @media (min-width: 769px) {
-    .mmenu { display: none; }
+    .mmenu-overlay { display: none; }
   }
   :global(body.menu-open) { overflow: hidden; }
 </style>
