@@ -103,6 +103,12 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
   }
   .header__link:hover { color: var(--ink); background: rgba(47,77,104,0.06); }
   .header__link.is-active { color: var(--steel); font-weight: 600; }
+  /* État scrollé (verre clair) : texte foncé garanti, même sur page à hero sombre */
+  .header.scrolled .header__link { color: var(--ink-2); }
+  .header.scrolled .header__link:hover { color: var(--ink); }
+  .header.scrolled .header__link.is-active { color: var(--steel); }
+  .header.scrolled .header__phone { color: var(--steel-deep); }
+  .header.scrolled .header__phone svg { color: var(--copper); }
 
   .header__actions {
     display: flex;
@@ -123,10 +129,15 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
   .header__phone svg { width: 18px; height: 18px; color: var(--copper); }
   .header__phone:hover { background: rgba(47,77,104,0.06); }
 
-  /* Header transparent (hero sombre) : texte clair tant que non scrollé */
+  /* Header transparent (hero sombre / vidéo) : texte clair + ombre pour le contraste */
   .header--transparent:not(.scrolled) .header__link,
   .header--transparent:not(.scrolled) .header__phone {
-    color: rgba(255,255,255,0.92);
+    color: #ffffff;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+  }
+  .header--transparent:not(.scrolled) .header__link.is-active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.16);
   }
   .header--transparent:not(.scrolled) .header__phone svg { color: #fff; }
   .header--transparent:not(.scrolled) .header__link:hover,

@@ -1,6 +1,7 @@
 ---
 import { cities } from '../data/cities';
 import Icon from './Icon.astro';
+import AmbientFx from './AmbientFx.astro';
 
 interface Props {
   /** Nombre de villes affichées dans la grille */
@@ -11,6 +12,7 @@ const { limit = 24, compact = false } = Astro.props;
 const shown = cities.slice(0, limit);
 ---
 <section class="section zone surface-dark" id="zone" data-drop-reveal>
+  <AmbientFx theme="water" />
   <div class="container">
     <div class="zone__head" data-reveal>
       <span class="eyebrow"><Icon name="pin" /> Zone d’intervention</span>
@@ -38,6 +40,8 @@ const shown = cities.slice(0, limit);
 </section>
 
 <style>
+  .zone { overflow: hidden; }
+  .zone .container { position: relative; z-index: 1; }
   .zone__head { max-width: 64ch; margin-bottom: 2rem; }
   .zone__cities {
     list-style: none;

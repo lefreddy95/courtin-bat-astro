@@ -1,0 +1,67 @@
+---
+/**
+ * Effets d'ambiance thématiques (halos animés flous).
+ * theme : 'water' (plomberie) · 'heat' (chauffage) · 'cold' (climatisation) · 'mix'.
+ * À placer comme premier enfant d'un conteneur en position:relative + overflow:hidden.
+ * Décoratif, léger (GPU), désactivé via prefers-reduced-motion.
+ */
+interface Props {
+  theme?: 'water' | 'heat' | 'cold' | 'mix';
+  class?: string;
+}
+const { theme = 'water', class: className } = Astro.props;
+---
+<div class:list={['afx', `afx--${theme}`, className]} aria-hidden="true">
+  <span class="afx__blob afx__blob--a"></span>
+  <span class="afx__blob afx__blob--b"></span>
+  <span class="afx__blob afx__blob--c"></span>
+</div>
+
+<style>
+  .afx {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .afx__blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(72px);
+    opacity: 0.2;
+    animation: afx-float 17s ease-in-out infinite;
+    will-change: transform;
+  }
+  .afx__blob--a { width: 400px; height: 400px; top: -14%; left: -8%; }
+  .afx__blob--b { width: 340px; height: 340px; bottom: -16%; right: -6%; animation-delay: -6s; }
+  .afx__blob--c { width: 280px; height: 280px; top: 38%; right: 26%; opacity: 0.13; animation-delay: -11s; }
+
+  /* Eau / plomberie */
+  .afx--water .afx__blob--a { background: radial-gradient(circle, #2f8fd0, transparent 70%); }
+  .afx--water .afx__blob--b { background: radial-gradient(circle, #1f6fa8, transparent 70%); }
+  .afx--water .afx__blob--c { background: radial-gradient(circle, #7dd3fc, transparent 70%); }
+
+  /* Chauffage / chaleur */
+  .afx--heat .afx__blob--a { background: radial-gradient(circle, #e0892f, transparent 70%); }
+  .afx--heat .afx__blob--b { background: radial-gradient(circle, #c75a2c, transparent 70%); }
+  .afx--heat .afx__blob--c { background: radial-gradient(circle, #f0b429, transparent 70%); }
+
+  /* Climatisation / froid */
+  .afx--cold .afx__blob--a { background: radial-gradient(circle, #38bdf8, transparent 70%); }
+  .afx--cold .afx__blob--b { background: radial-gradient(circle, #60a5fa, transparent 70%); }
+  .afx--cold .afx__blob--c { background: radial-gradient(circle, #a5f3fc, transparent 70%); }
+
+  /* Mix (eau + chaud + froid) */
+  .afx--mix .afx__blob--a { background: radial-gradient(circle, #2f8fd0, transparent 70%); }
+  .afx--mix .afx__blob--b { background: radial-gradient(circle, #e0892f, transparent 70%); }
+  .afx--mix .afx__blob--c { background: radial-gradient(circle, #38bdf8, transparent 70%); }
+
+  @keyframes afx-float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(22px, -32px) scale(1.08); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .afx__blob { animation: none; }
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import { site } from '../data/site';
 import Icon from './Icon.astro';
+import AmbientFx from './AmbientFx.astro';
 
 interface Props {
   title?: string;
@@ -12,6 +13,7 @@ const {
 } = Astro.props;
 ---
 <section class="section cta-band surface-dark" data-drop-reveal>
+  <AmbientFx theme="mix" />
   <div class="container cta-band__inner">
     <div>
       <span class="eyebrow">Contact</span>
@@ -28,7 +30,10 @@ const {
 </section>
 
 <style>
+  .cta-band { overflow: hidden; }
   .cta-band__inner {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: 1.4fr 1fr;
     align-items: center;

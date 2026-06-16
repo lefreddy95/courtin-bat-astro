@@ -6,6 +6,7 @@ import CTASection from './CTASection.astro';
 import QuoteForm from './QuoteForm.astro';
 import ServiceCard from './ServiceCard.astro';
 import Icon from './Icon.astro';
+import AmbientFx from './AmbientFx.astro';
 import { getService, services } from '../data/services';
 import { PRIMARY_CITY_SLUGS, cities } from '../data/cities';
 import { SITE_URL } from '../data/site';
@@ -15,6 +16,15 @@ const { slug } = Astro.props;
 const service = getService(slug)!;
 
 const related = service.related.map((s) => getService(s)).filter(Boolean);
+
+// Thème d'ambiance selon le service
+const heatSlugs = ['chauffage', 'chauffe-eau'];
+const coldSlugs = ['climatisation-genie-climatique'];
+const fxTheme: 'water' | 'heat' | 'cold' = heatSlugs.includes(service.slug)
+  ? 'heat'
+  : coldSlugs.includes(service.slug)
+    ? 'cold'
+    : 'water';
 const cityLinks = PRIMARY_CITY_SLUGS.map((s) => cities.find((c) => c.slug === s)).filter(Boolean);
 
 const serviceSchema = {
@@ -32,6 +42,7 @@ const serviceSchema = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 
   <section class="section service-hero surface-dark">
+    <AmbientFx theme={fxTheme} />
     <div class="container">
       <Breadcrumb dark items={[{ name: 'Accueil', path: '/' }, { name: 'Services', path: '/services' }, { name: service.name, path: `/${service.slug}` }]} />
       <div class="service-hero__inner">
@@ -100,7 +111,8 @@ const serviceSchema = {
 </Layout>
 
 <style>
-  .service-hero { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  .service-hero { padding-top: clamp(2rem, 5vw, 3.5rem); overflow: hidden; }
+  .service-hero .container { position: relative; z-index: 1; }
   .service-hero__inner { max-width: 60ch; margin-top: 1.5rem; }
   .service-hero__icon {
     background: rgba(255,255,255,0.14);
