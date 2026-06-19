@@ -71,6 +71,17 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
     align-items: center;
     color: var(--ink);
   }
+  .header__logo :global(.logo__img) {
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 4px #fff, 0 6px 18px rgba(6, 16, 24, 0.2);
+  }
+  .header--transparent:not(.scrolled) {
+    background: rgba(15, 36, 54, 0.86);
+    backdrop-filter: blur(10px) saturate(120%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
   /* Texte du logo en blanc quand le header est transparent (hero sombre) ;
      la pastille blanche autour de l'icône est gérée plus bas. */
   .header--transparent:not(.scrolled) .header__logo { color: #fff; }
@@ -277,18 +288,28 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
     .header__burger { display: flex; }
   }
   @media (max-width: 560px) {
-    .header__logo :global(.logo__text) { display: none; }
+    .header__inner { gap: 0.5rem; }
+    .header__logo :global(.logo) { gap: 0.45rem; }
+    .header__logo :global(.logo__text) { display: flex; }
+    .header__logo :global(.logo__text strong) {
+      font-size: 0.92rem;
+      letter-spacing: 0.01em;
+    }
+    .header__logo :global(.logo__text small) { display: none; }
+    .header__actions { gap: 0.45rem; }
     .header__phone {
+      width: 44px;
+      flex: 0 0 44px;
       min-height: 44px;
-      padding: 0.34rem 0.68rem 0.34rem 0.36rem;
+      justify-content: center;
+      padding: 0.34rem;
     }
     .header__phone-icon {
       width: 33px;
       height: 33px;
       flex-basis: 33px;
     }
-    .header__phone-number { display: none; }
-    .header__phone-label { font-size: 0.84rem; }
+    .header__phone-copy { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     .header__phone-icon::before,

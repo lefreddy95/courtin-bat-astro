@@ -36,7 +36,7 @@ const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Trav
         </p>
       </div>
 
-      <div class="reveal-wrap">
+      <div class="reveal-wrap hero__actions-wrap">
         <div class="hero__actions reveal-item">
           <a href="/contact" class="btn btn--copper btn--lg" data-track="quote_hero">Demander un devis</a>
           <a href={site.phoneHref} class="btn btn--glass btn--lg" data-track="call_hero">
@@ -337,6 +337,10 @@ const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Trav
         linear-gradient(to bottom, rgba(11, 17, 24, 0.55) 0%, rgba(11, 17, 24, 0.35) 45%, rgba(11, 17, 24, 0.88) 100%);
     }
     .hero__visual { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    .hero__actions-wrap { display: none; }
   }
 
   @media (max-width: 600px) {

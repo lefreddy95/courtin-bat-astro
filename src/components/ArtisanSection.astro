@@ -4,10 +4,18 @@ import Icon from './Icon.astro';
 <section class="section artisan" id="artisan">
   <div class="container artisan__inner">
     <div class="artisan__media" data-reveal>
-      <!-- Remplacer par une vraie photo de chantier / portrait artisan -->
-      <div class="artisan__photo" role="img" aria-label="Artisan plombier chauffagiste Courtin Bat au travail">
-        <Icon name="tools" />
-        <span>Photo de l’artisan / chantier à ajouter</span>
+      <div class="artisan__photo">
+        <video
+          class="artisan__video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-label="Courtin Bat en intervention sur un chantier"
+        >
+          <source src="/assets/votre-plombier-courtin-bat.mp4" type="video/mp4" />
+        </video>
       </div>
       <div class="artisan__stat">
         <strong>100&nbsp;%</strong>
@@ -51,17 +59,17 @@ import Icon from './Icon.astro';
     aspect-ratio: 4 / 3;
     border-radius: var(--radius-lg);
     background: var(--grad-steel);
-    color: rgba(255,255,255,0.75);
-    display: grid;
-    place-content: center;
-    justify-items: center;
-    gap: 0.8rem;
-    text-align: center;
-    padding: 2rem;
     box-shadow: var(--shadow-lg);
+    overflow: hidden;
   }
-  .artisan__photo :global(svg) { width: 48px; height: 48px; }
-  .artisan__photo span { font-size: 0.9rem; max-width: 22ch; }
+  .artisan__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
   .artisan__stat {
     position: absolute;
     bottom: -22px;
