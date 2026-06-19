@@ -68,13 +68,16 @@ import { site } from '../data/site';
           <p class="lead">Quelques exemples d’interventions réalisées avec soin dans le Vexin et le Val-d’Oise.</p>
         </div>
         <div class="grid grid--3">
-          {['Rénovation salle de bain', 'Remplacement chauffe-eau', 'Installation chauffage'].map((t, i) => (
+          {[
+            { title: 'Rénovation salle de bain', img: '/assets/realisations/salle_de_bain.png' },
+            { title: 'Remplacement chauffe-eau', img: '/assets/realisations/chauffe_eau.png' },
+            { title: 'Installation chauffage', img: '/assets/realisations/installation_chauffage.png' }
+          ].map((item, i) => (
             <div class="realisation card" data-reveal data-reveal-delay={i * 80}>
-              <div class="realisation__img" role="img" aria-label={`Réalisation : ${t}`}>
-                <Icon name="sparkle" />
-                <span>Photo à ajouter</span>
+              <div class="realisation__img" role="img" aria-label={`Réalisation : ${item.title}`}>
+                <img src={item.img} alt={`Photo de ${item.title}`} loading="lazy" width="400" height="300" />
               </div>
-              <h3>{t}</h3>
+              <h3>{item.title}</h3>
             </div>
           ))}
         </div>
@@ -104,11 +107,18 @@ import { site } from '../data/site';
   .realisation__img {
     aspect-ratio: 4 / 3;
     background: var(--grad-steel);
-    color: rgba(255,255,255,0.7);
-    display: grid; place-content: center; justify-items: center; gap: 0.5rem;
+    display: block;
+    overflow: hidden;
   }
-  .realisation__img :global(svg) { width: 36px; height: 36px; }
-  .realisation__img span { font-size: 0.85rem; }
+  .realisation__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .realisation.card:hover .realisation__img img {
+    transform: scale(1.05);
+  }
   .realisation h3 { padding: 1rem 1.3rem 1.3rem; font-size: 1.15rem; }
   .realisations__note { margin-top: 2rem; }
 </style>
