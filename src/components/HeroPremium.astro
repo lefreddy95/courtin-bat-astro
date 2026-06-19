@@ -5,6 +5,8 @@ import LogoWaterAnimation from './LogoWaterAnimation.astro';
 
 const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Travail soigné', 'Plomberie & chauffage'];
 ---
+<!-- Bloc plein écran : hero + barre de pastilles = 100vh sous le header -->
+<div class="hero-screen">
 <section class="hero" id="hero" data-water-scope-start>
   <!-- Fond premium : vidéo cinématique locale + overlays thématiques -->
   <div class="hero__bg" id="hero-bg" aria-hidden="true">
@@ -61,6 +63,7 @@ const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Trav
     ))}
   </div>
 </section>
+</div>
 
 <script>
   import { gsap } from "gsap";
@@ -105,16 +108,26 @@ const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Trav
 </script>
 
 <style>
+  /* Hero + barre de pastilles remplissent exactement la fenêtre sous le header.
+     header (var(--header-h)) + hero-screen (100svh - header) = 100svh */
+  .hero-screen {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100svh - var(--header-h));
+  }
+
   .hero {
     position: relative;
     overflow: hidden;
     background: #0b1118;
     color: #fff;
-    margin-top: calc(-1 * var(--header-h));
-    padding-top: calc(var(--header-h) + clamp(1.1rem, 4svh, 2.6rem));
+    /* Plus de margin-top négatif : la vidéo reste alignée SOUS le header,
+       elle ne remonte plus derrière la barre de navigation. */
+    padding-top: clamp(1.1rem, 4svh, 2.6rem);
     padding-bottom: clamp(1.8rem, 5svh, 3.6rem);
-    min-height: 560px;
-    min-height: clamp(500px, 74svh, 680px);
+    /* Occupe tout l'espace restant du bloc plein écran */
+    flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     align-items: center;
     /* Le hero est déjà pleine largeur (bloc enfant de <main>, sans padding).
@@ -302,9 +315,8 @@ const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Trav
 
   @media (max-height: 760px) and (min-width: 993px) {
     .hero {
-      padding-top: calc(var(--header-h) + 1rem);
+      padding-top: 1rem;
       padding-bottom: 1.6rem;
-      min-height: auto;
     }
     .hero__title {
       font-size: 3.05rem;
@@ -323,9 +335,8 @@ const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Trav
 
   @media (max-width: 992px) {
     .hero {
-      min-height: auto;
       align-items: flex-start;
-      padding-top: calc(var(--header-h) + 1.35rem);
+      padding-top: 1.35rem;
       padding-bottom: 1.8rem;
     }
     .hero__inner { grid-template-columns: 1fr; text-align: center; }
@@ -345,7 +356,7 @@ const badges = ['Artisan qualifié', 'Intervention locale', 'Devis clair', 'Trav
 
   @media (max-width: 600px) {
     .hero {
-      padding-top: calc(var(--header-h) + 0.95rem);
+      padding-top: 0.95rem;
       padding-bottom: 1.35rem;
     }
     .hero__tag { margin-bottom: 0.55rem; }
