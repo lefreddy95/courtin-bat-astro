@@ -11,10 +11,14 @@ interface Props {
   description: string;
   path?: string;
   noindex?: boolean;
+  /** Image OG/Twitter spécifique à la page (1200×630) */
+  image?: string;
+  /** Texte alternatif de l'image OG */
+  imageAlt?: string;
   /** Header transparent (pages avec hero sombre) */
   transparentHeader?: boolean;
 }
-const { title, description, path, noindex, transparentHeader = false } = Astro.props;
+const { title, description, path, noindex, image, imageAlt, transparentHeader = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="fr" class="no-js">
@@ -40,7 +44,7 @@ const { title, description, path, noindex, transparentHeader = false } = Astro.p
       href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@500;600;700;800&display=swap"
     />
 
-    <SEOHead title={title} description={description} path={path} noindex={noindex} />
+    <SEOHead title={title} description={description} path={path} noindex={noindex} image={image} imageAlt={imageAlt} />
     <slot name="head" />
   </head>
   <body>

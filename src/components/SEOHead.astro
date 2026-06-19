@@ -6,7 +6,10 @@ interface Props {
   description: string;
   /** Chemin de la page (ex: /services) pour le canonical */
   path?: string;
+  /** Image OG/Twitter (1200×630, chemin absolu ou relatif au site) */
   image?: string;
+  /** Texte alternatif de l'image OG */
+  imageAlt?: string;
   /** Empêcher l'indexation (pages utilitaires) */
   noindex?: boolean;
   type?: 'website' | 'article';
@@ -17,6 +20,7 @@ const {
   description,
   path = Astro.url.pathname,
   image = '/assets/og-courtin-bat.jpg',
+  imageAlt,
   noindex = false,
   type = 'website',
 } = Astro.props;
@@ -24,26 +28,34 @@ const {
 const canonical = new URL(path.endsWith('/') && path !== '/' ? path.slice(0, -1) : path, SITE_URL).href;
 const ogImage = new URL(image, SITE_URL).href;
 const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+const altText = imageAlt ?? `${site.name} — ${site.tagline}`;
 ---
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
-{noindex && <meta name="robots" content="noindex, nofollow" />}
+<!-- Indexation explicite (les robots et certains agrégateurs la lisent) -->
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
 
-<!-- Open Graph -->
+<!-- Open Graph (WhatsApp, iMessage, Messages, Facebook, LinkedIn, Telegram…) -->
 <meta property="og:type" content={type} />
 <meta property="og:site_name" content={site.name} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:image:secure_url" content={ogImage} />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={altText} />
 <meta property="og:locale" content="fr_FR" />
 
-<!-- Twitter -->
+<!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={altText} />
 
 <meta name="geo.region" content="FR-95" />
 <meta name="geo.placename" content="Vexin, Val-d’Oise" />
