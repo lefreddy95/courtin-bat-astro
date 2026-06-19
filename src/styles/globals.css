@@ -18,6 +18,11 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 1rem);
+  /* Empêche tout débordement horizontal au niveau racine (ex : éléments
+     position:fixed comme le menu/CTA mobile qui se dimensionnent sur
+     innerWidth en incluant la scrollbar). `clip` ne crée pas de conteneur
+     de défilement et ne casse pas le position:sticky du header. */
+  overflow-x: clip;
 }
 
 body {
